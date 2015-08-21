@@ -1,12 +1,26 @@
 #include "funcionregistro.h"
-long int registros(long int *direc)
-{
-    int i=0;
-    printf(" El banco de registro de las primeras 13 posiciones en la memoria son:\n\n");
-    for(i=0;i<=12;i++)
-    {
-        printf("R[%d]=",i+1);
-        printf("%d\n",direc[i]);
-    }
 
+void mostrarregistros(uint32_t *registros, size_t t)
+{
+	int i;
+
+	HANDLE hCon=GetStdHandle(STD_OUTPUT_HANDLE);
+
+	if(!registros)
+		return;
+
+	for(i=0; i<t; i++)
+	{
+		if( (i % 4) == 0 )
+			printf("\n");
+        //else
+		SetConsoleTextAttribute(hCon,PURPLE);
+		printf("R%-2d:", i);
+		SetConsoleTextAttribute(hCon,GREEN);
+		printf("%.8X\t", registros[i]);
+	}
+	printf("\n");
+
+	return;
 }
+
