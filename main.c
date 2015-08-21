@@ -5,6 +5,13 @@
 main()
 {
 
-    long int R[13]={0,0,0,0,0,0,0,0,0,0,0,0,0};
+    long int R[13]={0,1,2,3,4,5,6,7,8,9,10,11,12};
+    long int Rdr[6];
     registros(R);
+    Rdr[0]=ADD(Rn,Rm);
+    Rdr[1]=AND(Rn,Rm);
+    Rdr[2]=EOR(Rn,Rm);
+    Rdr[3]=MOV(Rm);
+    Rdr[4]=ORR(Rn,Rm);
+    Rdr[5]=SUB(Rn,Rm);
 }
