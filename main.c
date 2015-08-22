@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "funcionregistro.h"
-
+#include "colors.h"
+#include "instrucciones.h"
 main()
 {
     uint32_t registros[13]={0,0,0,0,0,0,0,0,0,0,0,0,0};
