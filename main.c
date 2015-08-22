@@ -16,8 +16,4 @@ main()
     Rdr[3]=MOV(Rm);
     Rdr[4]=ORR(Rn,Rm);
     Rdr[5]=SUB(Rn,Rm);
-
-
-
-
 }
