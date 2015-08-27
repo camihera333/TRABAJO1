@@ -5,6 +5,7 @@
 #include "instrucciones.h"
 #include <stdint.h>
 
+#include "colors.h"
 int main(void)
 {
     uint32_t Banderas[4]={0,0,0,0};

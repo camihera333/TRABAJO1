@@ -1,8 +1,9 @@
 #include "funcionregistro.h"
 
-void mostrarregistros(uint32_t* registros, size_t t)
+void mostrarregistros(uint32_t *registros, size_t t)  /*uint32_t registros : puntero a la primera direccion...
+ del arreglo, size_t t tamaño de arreglo*/
 {
-	int i;
+	int i; //i iterador
 
 	HANDLE hCon=GetStdHandle(STD_OUTPUT_HANDLE);
 
