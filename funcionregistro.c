@@ -1,4 +1,5 @@
 #include "funcionregistro.h"
+#include "instrucciones.h"
 
 void mostrarregistros(uint32_t *registros, size_t t)  /*uint32_t registros : puntero a la primera direccion...
  del arreglo, size_t t tamaño de arreglo*/
@@ -57,7 +58,7 @@ void mostraralu(uint32_t* Rdr, size_t t)
 	HANDLE hCon=GetStdHandle(STD_OUTPUT_HANDLE);
 
           SetConsoleTextAttribute(hCon,WHITE);
-		printf("\t\tEl %d valor ALU es:  %d\t\t",t+1,*(Rdr+t));
+		printf("\t\tEl %d valor ALU es:  %u\t\t",t,*(Rdr+t));
 
 
 	SetConsoleTextAttribute(hCon,WHITE);
@@ -66,3 +67,5 @@ void mostraralu(uint32_t* Rdr, size_t t)
 	return;
 
 }
+
+
