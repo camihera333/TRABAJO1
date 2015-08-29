@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 
-void convbits (uint32_t Rn, uint32_t Rm, uint32_t* Registros, uint32_t* bitsRn, uint32_t* bitsRm)
+void convbits (uint32_t Rn, uint32_t Rm, uint32_t* Registros, uint32_t* bitsRn, uint32_t* bitsRm) //función para convertir decimal a bits, guardando el resultado en un arreglo.
 {
     int i;
     for(i=31;i>=0;i--)
@@ -30,7 +30,7 @@ printf("\n\n");
     }
 }
 
- void ADD (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+ void ADD (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //suma
 {
 
     *(Rdr+0)=*(Registros+Rn)+*(Registros+Rm);
@@ -62,7 +62,7 @@ printf("\n\n");
 
 }
 
-void AND (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void AND (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //AND bit a bit
 {
     *(Rdr+1)=*(Registros+Rn)&*(Registros+Rm);
     if(((1<<7)&*(Rdr+1))==128)
@@ -92,7 +92,7 @@ void AND (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
 
 }
 
-void EOR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void EOR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //or exclusiva bit a bit
 {
     *(Rdr+2)=*(Registros+Rn)^*(Registros+Rm);
    if(((1<<7)&*(Rdr+2))==128)
@@ -122,7 +122,7 @@ void EOR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
 
 }
 
-void MOV (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void MOV (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // escribe un valor en un registro
 {
     *(Rdr+3)=*(Registros+Rm);
     if(((1<<7)&*(Rdr+3))==128)
@@ -152,7 +152,7 @@ void MOV (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
 
 }
 
-void ORR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void ORR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //or lógica bit a bit
 {
     *(Rdr+4)=*(Registros+Rn)|*(Registros+Rm);
    if(((1<<7)&*(Rdr+4))==128)
@@ -181,7 +181,7 @@ void ORR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
         *(Banderas+3)=0;
 }
 
-void SUB (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void SUB (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // resta
 {
     *(Rdr+5)=*(Registros+Rn)-*(Registros+Rm);
     if(((1<<7)&*(Rdr+5))==128)
@@ -210,7 +210,7 @@ void SUB (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
         *(Banderas+3)=0;
 }
 
-void MVN (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void MVN (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // guarda el complemento del registro
 {
       *(Rdr+6)=~*(Registros+Rm);
 
@@ -240,7 +240,7 @@ void MVN (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
         *(Banderas+3)=0;
 }
 
-void RSB (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void RSB (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // obtiene el complemento a dos de un número
 {
     *(Rdr+7)=~*(Registros+Rm);
     *(Rdr+7)=*(Rdr+7)-1;
@@ -271,7 +271,7 @@ void RSB (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
         *(Banderas+3)=0;
 
 }
-void MUL (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void MUL (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //multiplica
 {
     *(Rdr+8)=(*(Registros+Rm))*(*(Registros+Rn));
 
@@ -301,7 +301,7 @@ void MUL (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t*
         *(Banderas+3)=0;
 }
 
-void BIC (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void BIC (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //and entre un registro y el complemento de otro
 {
     *(Rdr+9)=(*(Registros+Rn))&(~*(Registros+Rm));
     if(((1<<7)&*(Rdr+9))==128)
@@ -330,11 +330,11 @@ void BIC (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t*
         *(Banderas+3)=0;
 }
 
-void NOP ()
+void NOP () //no hace nada
 {
 }
 
-void SBC (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void SBC (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // resta con carry
 {
     *(Rdr+10)=~*(Registros+Rn);
     *(Rdr+10)=*(Rdr+10)-1;
@@ -365,7 +365,7 @@ void SBC (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t*
         *(Banderas+3)=0;
 }
 
-void CMN (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void CMN (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // suma pero no guarda el resultado, sólo modifica banderas
 {
     int aux=0;
     aux=*(Registros+Rn)+*(Registros+Rm);
@@ -397,7 +397,7 @@ void CMN (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
 
 }
 
-void CMP (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void CMP (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)  // resta pero no guarda el resultado, sólo modifica banderas
 {
     int aux1=0;
     aux1=*(Registros+Rn)-*(Registros+Rm);
@@ -429,7 +429,7 @@ void CMP (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
 
 }
 
-void LSL (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void LSL (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //desplazamiento lógico a la izquierda
 {
     *(Rdr+12)=*(Registros+Rn)<<*(Registros+Rm);
 
@@ -459,7 +459,7 @@ void LSL (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
         *(Banderas+3)=0;
 
 }
-void TST (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void TST (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // and bit a bit pero no guarda el resultado, sólo modifica banderas
 {
     int aux=0;
     aux=*(Registros+Rn)&*(Registros+Rm);
@@ -491,7 +491,7 @@ void TST (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
 
 }
 
-void LSR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void LSR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //desplazamiento lógico a la derecha
 {
     *(Rdr+14)=*(Registros+Rn)>>*(Registros+Rm);
 
@@ -521,7 +521,7 @@ void LSR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
         *(Banderas+3)=0;
 
 }
-void REV(uint32_t Rm,uint32_t* Rdr,uint32_t* registros, uint32_t* Banderas)
+void REV(uint32_t Rm,uint32_t* Rdr,uint32_t* registros, uint32_t* Banderas) // cambia el orden de los bits
 {
     uint32_t help[4],A[4]={0,0,0,0};
     int i=0;
@@ -577,7 +577,7 @@ void REV(uint32_t Rm,uint32_t* Rdr,uint32_t* registros, uint32_t* Banderas)
         *(Banderas+3)=0;
 }
 
-void REV16(uint32_t Rm,uint32_t* Rdr,uint32_t* registros,uint32_t* Banderas)
+void REV16(uint32_t Rm,uint32_t* Rdr,uint32_t* registros,uint32_t* Banderas) //cambia el orden de los bits en cada 16 bits
 {
     uint32_t help[2],A[2]={0,0};
     int i=0;
@@ -622,7 +622,7 @@ void REV16(uint32_t Rm,uint32_t* Rdr,uint32_t* registros,uint32_t* Banderas)
         *(Banderas+3)=0;
 }
 
-void REVSH(uint32_t Rm,uint32_t* Rdr,uint32_t* registros, uint32_t* Banderas)
+void REVSH(uint32_t Rm,uint32_t* Rdr,uint32_t* registros, uint32_t* Banderas) //cambia el orden de los bits del halfword bajo
 {
     uint32_t help,A[2]={0,0},total=0;
     int i=0;
@@ -666,7 +666,7 @@ void REVSH(uint32_t Rm,uint32_t* Rdr,uint32_t* registros, uint32_t* Banderas)
         *(Banderas+3)=0;
 }
 
-void ROR(uint32_t Rm,uint32_t Rn,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas)
+void ROR(uint32_t Rm,uint32_t Rn,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas) //Rotación a la derecha
 {
     int help,i;
     uint32_t A=0,help2;
@@ -706,7 +706,7 @@ void ROR(uint32_t Rm,uint32_t Rn,uint32_t* Rdr, uint32_t* registros, uint32_t* B
         *(Banderas+3)=0;
 }
 
-void ASR(uint32_t Rn,uint32_t Rm,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas)
+void ASR(uint32_t Rn,uint32_t Rm,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas) // desplazamiento aritmético a la derecha
 {
     int help,i;
     uint32_t A=0;
@@ -746,7 +746,7 @@ void ASR(uint32_t Rn,uint32_t Rm,uint32_t* Rdr, uint32_t* registros, uint32_t* B
         *(Banderas+3)=0;
 }
 
-void ADC (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
+void ADC (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //suma con carry
 {
     uint32_t c;
     c=*(Registros+Rn)+*(Registros+Rm);
@@ -784,5 +784,4 @@ void ADC (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
     else
         *(Banderas+3)=0;
 }
-
 
