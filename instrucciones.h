@@ -28,25 +28,5 @@ void REV16 (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)
 void REVSH (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
 void ROR(uint32_t Rm,uint32_t corri,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas);
 void TST (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-/*void ASR (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-//void ROR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas,uint32_t* bitsRn, uint32_t* bitsRm);
-
-void CMN (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-void CMP (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-
-void LSL (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-void LSR (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-
-
-
-
-
-void REV (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-void REV16 (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-void REVSH (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
-
-
-
-void TST (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);*/
 
 
