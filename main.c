@@ -15,29 +15,29 @@ int main(void)
     uint32_t bitsRn[32],bitsRm[32];
 
 	mostrarregistros(Rdr, 13);
-    ADD(Rn,Rm,Rdr,registros,Banderas);
-    AND(Rn,Rm,Rdr,registros,Banderas);
-    EOR(Rn,Rm,Rdr,registros,Banderas);
-    MOV(Rm,Rdr,registros,Banderas);
-    ORR(Rn,Rm,Rdr,registros,Banderas);
-    SUB(Rn,Rm,Rdr,registros,Banderas);
-    MVN(Rm,Rdr,registros,Banderas);
-    RSB(Rm,Rdr,registros,Banderas);
-    MUL(Rn,Rm,Rdr,registros,Banderas);
-    BIC(Rn,Rm,Rdr,registros,Banderas);
-    NOP();
-    SBC(Rn,Rm,Rdr,registros,Banderas);
-    CMN(Rn,Rm,Rdr,registros,Banderas);
-    CMP(Rn,Rm,Rdr,registros,Banderas);
-    LSL(Rn,Rm,Rdr,registros,Banderas);
-    LSR(Rn,Rm,Rdr,registros,Banderas);
-    REV(Rm,Rdr,registros,Banderas);
-    REV16(Rm,Rdr,registros,Banderas);
-    REVSH(Rm,Rdr,registros,Banderas);
-    ROR(Rm,Rn,Rdr,registros,Banderas);
-    ADC(Rn,Rm,Rdr,registros,Banderas);
-    ASR(Rm,Rn,Rdr,registros,Banderas);
-    TST(Rn,Rm,Rdr,registros,Banderas);
+    ADD(Rn,Rm,Rdr,registros,Banderas);//suma
+    AND(Rn,Rm,Rdr,registros,Banderas);//AND bit a bit 
+    EOR(Rn,Rm,Rdr,registros,Banderas);//OR exclusiva bit a bit
+    MOV(Rm,Rdr,registros,Banderas); //escribe un valor en registro
+    ORR(Rn,Rm,Rdr,registros,Banderas); // or lógica bit a bit
+    SUB(Rn,Rm,Rdr,registros,Banderas); //resta
+    MVN(Rm,Rdr,registros,Banderas); //guarda el complemento de un registro
+    RSB(Rm,Rdr,registros,Banderas); //obtiene el complemento a dos de un número
+    MUL(Rn,Rm,Rdr,registros,Banderas); //multiplica
+    BIC(Rn,Rm,Rdr,registros,Banderas); // and entre un registro y el complemento de otro
+    NOP(); //no hace nada
+    SBC(Rn,Rm,Rdr,registros,Banderas); // resta con carry
+    CMN(Rn,Rm,Rdr,registros,Banderas); //suma pero no guarda el resultado, solo modifica banderas
+    CMP(Rn,Rm,Rdr,registros,Banderas); //resta pero no guarda el resultado, solo modifica banderas
+    LSL(Rn,Rm,Rdr,registros,Banderas); // desplazamiento lógico a la izquierda
+    LSR(Rn,Rm,Rdr,registros,Banderas); //desplazamiento lógico a la derecha
+    REV(Rm,Rdr,registros,Banderas); //cambia el orden de los bits
+    REV16(Rm,Rdr,registros,Banderas); //cambia el orden de los bits cada 16 bits
+    REVSH(Rm,Rdr,registros,Banderas); //cambia el orden de los bits del halfword bajo
+    ROR(Rm,Rn,Rdr,registros,Banderas); // rotación a la derecha
+    ADC(Rn,Rm,Rdr,registros,Banderas);// suma con carry
+    ASR(Rm,Rn,Rdr,registros,Banderas); //desplazamiento aritmético a la derecha
+    TST(Rn,Rm,Rdr,registros,Banderas);// and bit a bit pero no guarda el resultado, solo modifica banderas
 
 
     return 0;
