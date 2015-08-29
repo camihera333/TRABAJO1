@@ -5,14 +5,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <windows.h>
-
 #include "colors.h"
-/**
-*\brief declaracion de la funcion mostrarregistros  
-*\param uint32_t *registros:puntero de direccion al primer elemento del arreglo
-*\param size_t t : tamaño del arreglo
-*\return un 0 
-*/
+
 
 void mostrarregistros(uint32_t* registros, size_t t);
 void mostrarbanderas(uint32_t* banderas, size_t t2);
