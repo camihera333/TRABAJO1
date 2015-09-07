@@ -3,36 +3,6 @@
 #include "funcBanderas.h"
 #include <stdint.h>
 
-/*
-void convbits (uint32_t Rn, uint32_t Rm, uint32_t* Registros, uint32_t* bitsRn, uint32_t* bitsRm) //funcion para convertir decimal a bits...
-                                                                                                    //guardando el resultado en un arreglo.
-
-{
-    int i;
-    for(i=31;i>=0;i--)
-    {
-     bitsRn[i]=*(Registros+Rn)%2;
-    *(Registros+Rn)=(*(Registros+Rn))/2;
-    }
-        for(i=0;i<=31;i++)
-    {
-        printf("%d",bitsRn[i]);
-    }
-
-printf("\n\n");
-
-
-    for(i=31;i>=0;i--)
-    {
-     bitsRm[i]=*(Registros+Rm)%2;
-    *(Registros+Rm)=(*(Registros+Rm))/2;
-    }
-    for(i=0;i<=31;i++)
-    {
-        printf("%d",bitsRm[i]);
-    }
-}
-*/
  void ADD (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //suma
 {
     *(Rdr+0)=*(Registros+Rn)+*(Registros+Rm);
@@ -51,7 +21,7 @@ void EOR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t
 }
 
 
-void ORR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //or l骻ica bit a bit
+void ORR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //or l贸gica bit a bit
 {
     *(Rdr+3)=*(Registros+Rn)|*(Registros+Rm);
 }
@@ -76,13 +46,13 @@ void BIC (uint32_t Rn,uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t*
 }
 
 
-void LSL (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //desplazamiento l骻ico a la izquierda
+void LSL (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //desplazamiento l贸gico a la izquierda
 {
     *(Rdr+7)=*(Registros+Rn)<<*(Registros+Rm);
 }
 
 
-void LSR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //desplazamiento l骻ico a la derecha
+void LSR (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) //desplazamiento l贸gico a la derecha
 {
     *(Rdr+8)=*(Registros+Rn)>>*(Registros+Rm);
 }
@@ -104,14 +74,14 @@ void MVN (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) /
       *(Rdr+11)=~*(Registros+Rm);
 }
 
-void RSB (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // obtiene el complemento a dos de un n鷐ero
+void RSB (uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // obtiene el complemento a dos de un n煤mero
 {
     *(Rdr+12)=~*(Registros+Rm);
     *(Rdr+12)=*(Rdr+12)-1;
     *(Rdr+12)=*(Registros+Rm);
 }
 
-void ASR(uint32_t Rn,uint32_t Rm,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas) // desplazamiento aritm閠ico a la derecha
+void ASR(uint32_t Rn,uint32_t Rm,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas) // desplazamiento aritm茅tico a la derecha
 {
     int help,i;
     uint32_t A=0;
@@ -126,19 +96,19 @@ void ASR(uint32_t Rn,uint32_t Rm,uint32_t* Rdr, uint32_t* registros, uint32_t* B
     *(Rdr+13)=*(registros+Rn);
 }
 
-void CMN (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t * Registros, uint32_t* Banderas) // suma pero no guarda el resultado, s髄o modifica banderas
+void CMN (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t * Registros, uint32_t* Banderas) // suma pero no guarda el resultado, s贸lo modifica banderas
 {
     int aux=0;
     aux=*(Registros+Rn)+*(Registros+Rm);
 }
 
-void CMP (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)  // resta pero no guarda el resultado, s髄o modifica banderas
+void CMP (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas)  // resta pero no guarda el resultado, s贸lo modifica banderas
 {
     int aux=0;
     aux=*(Registros+Rn)-*(Registros+Rm);
 }
 
-void TST (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // and bit a bit pero no guarda el resultado, s髄o modifica banderas
+void TST (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas) // and bit a bit pero no guarda el resultado, s贸lo modifica banderas
 {
     int aux=0;
     aux=*(Registros+Rn)&*(Registros+Rm);
@@ -148,8 +118,8 @@ void NOP () //no hace nada
 {
 }
 
-//las funciones ALU que vienen a continuaci髇 requieren un procedimiento individual para la
-//realizaci髇 de las banderas por lo que no se pone dicho procedimiento dento de cada una de las funciones
+//las funciones ALU que vienen a continuaci贸n requieren un procedimiento individual para la
+//realizaci贸n de las banderas por lo que no se pone dicho procedimiento dento de cada una de las funciones
 
 
 void REV(uint32_t Rm,uint32_t* Rdr,uint32_t* registros, uint32_t* Banderas) // cambia el orden de los bits
@@ -298,7 +268,7 @@ void REVSH(uint32_t Rm,uint32_t* Rdr,uint32_t* registros, uint32_t* Banderas) //
 }
 
 
-void ROR(uint32_t Rn,uint32_t Rm,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas) //Rotaci髇 a la derecha
+void ROR(uint32_t Rn,uint32_t Rm,uint32_t* Rdr, uint32_t* registros, uint32_t* Banderas) //Rotaci贸n a la derecha
 
 {
     int help,i;
