@@ -28,7 +28,7 @@ int main(void)
 	funcBanderas(Rn,Rm,*(Rdr+2),registros,Banderas);
 	mostrarbanderas(Banderas,4);
 
-	ORR(Rn,Rm,Rdr,registros,Banderas); // or l骻ica bit a bit
+	ORR(Rn,Rm,Rdr,registros,Banderas); // or l贸gica bit a bit
 	mostraralu(Rdr,3);
 	funcBanderas(Rn,Rm,*(Rdr+3),registros,Banderas);
 	mostrarbanderas(Banderas,4);
@@ -48,12 +48,12 @@ int main(void)
 	funcBanderas(Rn,Rm,*(Rdr+6),registros,Banderas);
 	mostrarbanderas(Banderas,4);
 
-	LSL(Rn,Rm,Rdr,registros,Banderas); // desplazamiento l骻ico a la izquierda
+	LSL(Rn,Rm,Rdr,registros,Banderas); // desplazamiento l贸gico a la izquierda
 	mostraralu(Rdr,7);
 	funcBanderas(Rn,Rm,*(Rdr+7),registros,Banderas);
 	mostrarbanderas(Banderas,4);
 
-	LSR(Rn,Rm,Rdr,registros,Banderas); //desplazamiento l骻ico a la derecha
+	LSR(Rn,Rm,Rdr,registros,Banderas); //desplazamiento l贸gico a la derecha
 	mostraralu(Rdr,8);
 	funcBanderas(Rn,Rm,*(Rdr+8),registros,Banderas);
 	mostrarbanderas(Banderas,4);
@@ -73,12 +73,12 @@ int main(void)
 	funcBanderas1(Rn,Rm,*(Rdr+11),registros,Banderas);
 	mostrarbanderas(Banderas,4);
 
-    RSB(Rm,Rdr,registros,Banderas); //obtiene el complemento a dos de un n鷐ero
+    RSB(Rm,Rdr,registros,Banderas); //obtiene el complemento a dos de un n煤mero
     mostraralu(Rdr,12);
 	funcBanderas1(Rn,Rm,*(Rdr+12),registros,Banderas);
 	mostrarbanderas(Banderas,4);
 
-	ASR(Rn,Rm,Rdr,registros,Banderas); //obtiene el complemento a dos de un n鷐ero
+	ASR(Rn,Rm,Rdr,registros,Banderas); //obtiene el complemento a dos de un n煤mero
     mostraralu(Rdr,13);
 	funcBanderas(Rn,Rm,*(Rdr+13),registros,Banderas);
 	mostrarbanderas(Banderas,4);
@@ -101,7 +101,7 @@ int main(void)
 	REV(Rm,Rdr,registros,Banderas); //cambia el orden de los bits
     REV16(Rm,Rdr,registros,Banderas); //cambia el orden de los bits cada 16 bits
     REVSH(Rm,Rdr,registros,Banderas); //cambia el orden de los bits del halfword bajo
-    ROR(Rm,Rn,Rdr,registros,Banderas); // rotaci髇 a la derecha
+    ROR(Rm,Rn,Rdr,registros,Banderas); // rotaci贸n a la derecha
     ADC(Rn,Rm,Rdr,registros,Banderas);// suma con carry
 
     NOP(); //no hace nada
@@ -115,12 +115,3 @@ int main(void)
     return 0;
 }
 
-    int i;
-    for(i=0;i<=22;i++)
-    {
-    mostraralu(Rdr,i);
-    mostrarbanderas(Banderas,4);
-    }
-
-    return 0;
-}
