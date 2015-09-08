@@ -33,29 +33,29 @@ void mostrarRegistros(uint32_t *registros, size_t t)
 	printw("REGISTROS");
 	
 	for(i=0; i<t/2; i++)
-	{	move(5+i, 2);	
-		attron(COLOR_PAIR(1));
-		printw("R%-2d:", i);
-		attron(COLOR_PAIR(2));
-		printw("%d\t\t", registros[i]);
+	{	move(5+i, 2);	//se pone el cursor en la posicion deseda
+		attron(COLOR_PAIR(1)); // se inicializa el color
+		printw("R%-2d:", i); 
+		attron(COLOR_PAIR(2)); // se inicializa el color
+		printw("%d\t\t", registros[i]); //se imprime el resultado
 	}
 	for(i=(t/4)+2; i<=(t/2)+2; i++)
-	{	move(1+i, 20);	
-		attron(COLOR_PAIR(1));
+	{	move(1+i, 20);	 //se pone el cursor en la posicion deseda
+		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i);
-		attron(COLOR_PAIR(2));
-		printw("%d\t\t", registros[i]);
+		attron(COLOR_PAIR(2)); // se inicializa el color
+		printw("%d\t\t", registros[i]); //se imprime el resultado
 	}
 	for(i=(t/2)+3; i<=(t/2)+6; i++)
-	{	move(-4+i, 35);	
-		attron(COLOR_PAIR(1));
+	{	move(-4+i, 35);	 //se pone el cursor en la posicion deseda
+		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i);
-		attron(COLOR_PAIR(2));
-		printw("%d\t\t", registros[i]);
+		attron(COLOR_PAIR(2)); // se inicializa el color
+		printw("%d\t\t", registros[i]); //se imprime el resultado
 	}
 			
-	attroff(COLOR_PAIR(2));
-	attroff(COLOR_PAIR(1));
+	attroff(COLOR_PAIR(2)); //se finaliza el color
+	attroff(COLOR_PAIR(1)); //se finaliza el color
 	
 	refreshScreen();
 }

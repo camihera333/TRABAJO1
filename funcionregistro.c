@@ -3,19 +3,19 @@
 #include "funcBanderas.h"
 
 
- void mostrarinstrucciones(uint32_t* Rdr, size_t t)
+ void mostrarinstrucciones(uint32_t* Rdr, size_t t) //funcion que muestra las instrucciones
 {
     int i;
 		
 	    attron (COLOR_PAIR (1));
 		mvprintw(13,5,":%u",*(Rdr+t));
 
-	refresh();	/* Imprime en la pantalla Sin esto el printw no es mostrado */
+	refresh();	
 
 	return;
 }
 
-void mostrarbanderas(uint32_t* banderas, size_t t)
+void mostrarbanderas(uint32_t* banderas, size_t t) //funcion que muestra las banderas
 {
     int i;
 	
@@ -30,7 +30,7 @@ void mostrarbanderas(uint32_t* banderas, size_t t)
             printw("\n");
 	}
 
-    if(*(banderas+0)==1)
+    if(*(banderas+0)==1) //condicion banderas para mostrar si se activa o no la bandera negativo
             {
           attron (COLOR_PAIR (3));
 		printw("    N");
@@ -41,7 +41,7 @@ void mostrarbanderas(uint32_t* banderas, size_t t)
 		printw("    N");
         }
 
-    if(*(banderas+1)==1)
+    if(*(banderas+1)==1) //condicion banderas para mostrar si se activa o no la bandera zero
             {
           attron (COLOR_PAIR (3));
 		printw("    Z");
@@ -52,7 +52,7 @@ void mostrarbanderas(uint32_t* banderas, size_t t)
 		printw("    Z");
         }
 
-    if(*(banderas+2)==1)
+    if(*(banderas+2)==1) //condicion banderas para mostrar si se activa o no la bandera carry
             {
           attron (COLOR_PAIR (3));
 		printw("    C");
@@ -62,8 +62,8 @@ void mostrarbanderas(uint32_t* banderas, size_t t)
           attron (COLOR_PAIR (4));
 		printw("    C");
         }
-
-    if(*(banderas+3)==1)
+ 
+    if(*(banderas+3)==1) //condicion banderas para mostrar si se activa o no la bandera sobreflujo
             {
           attron (COLOR_PAIR (3));
 		printw("    V");
