@@ -2,103 +2,81 @@
 #include "instrucciones.h"
 #include "funcBanderas.h"
 
-void mostrarregistros(uint32_t *registros, size_t t)  /*uint32_t registros : puntero a la primera direccion...
-                                                        del arreglo, size_t t tamaño de arreglo*/
+
+ void mostrarinstrucciones(uint32_t* Rdr, size_t t)
 {
-	int i; //i iterador
+    int i;
+		
+	    attron (COLOR_PAIR (1));
+		mvprintw(13,5,":%u",*(Rdr+t));
 
-	HANDLE hCon=GetStdHandle(STD_OUTPUT_HANDLE);
+	refresh();	/* Imprime en la pantalla Sin esto el printw no es mostrado */
 
-	if(!registros)
-		return;
-
-	for(i=0; i<t; i++)
-	{
-		if( (i % 4) == 0 )
-			printf("\n");
-		SetConsoleTextAttribute(hCon,PURPLE);
-		printf("R%-2d:", i);
-		SetConsoleTextAttribute(hCon,YELLOW);
-		printf("%d\t\t", registros[i]);
-	}
-	printf("\n\n\n");
 	return;
 }
 
-
 void mostrarbanderas(uint32_t* banderas, size_t t)
 {
-	int i;
+    int i;
+	
+		
+	init_pair(3, COLOR_GREEN, COLOR_BLACK);
+    init_pair(4, COLOR_RED, COLOR_BLACK);
 
-	HANDLE hCon=GetStdHandle(STD_OUTPUT_HANDLE);
 
 	for(i=0; i<t; i++)
 	{
 		if( (i % 4) == 0 )
-            printf("\n");
+            printw("\n");
 	}
-        if(*(banderas+0)==1)
+
+    if(*(banderas+0)==1)
             {
-          SetConsoleTextAttribute(hCon,GREEN);
-		printf("    N\t\t");
+          attron (COLOR_PAIR (3));
+		printw("    N");
             }
         else
         {
-          SetConsoleTextAttribute(hCon,RED);
-		printf("    N\t\t");
+          attron (COLOR_PAIR (4));
+		printw("    N");
         }
 
     if(*(banderas+1)==1)
             {
-          SetConsoleTextAttribute(hCon,GREEN);
-		printf("    Z\t\t");
+          attron (COLOR_PAIR (3));
+		printw("    Z");
             }
         else
         {
-          SetConsoleTextAttribute(hCon,RED);
-		printf("    Z\t\t");
+          attron (COLOR_PAIR (4));
+		printw("    Z");
         }
 
     if(*(banderas+2)==1)
             {
-          SetConsoleTextAttribute(hCon,GREEN);
-		printf("    C\t\t");
+          attron (COLOR_PAIR (3));
+		printw("    C");
             }
         else
         {
-          SetConsoleTextAttribute(hCon,RED);
-		printf("    C\t\t");
+          attron (COLOR_PAIR (4));
+		printw("    C");
         }
 
     if(*(banderas+3)==1)
             {
-          SetConsoleTextAttribute(hCon,GREEN);
-		printf("    V\t\t");
+          attron (COLOR_PAIR (3));
+		printw("    V");
             }
         else
         {
-          SetConsoleTextAttribute(hCon,RED);
-		printf("    V\t\t");
+          attron (COLOR_PAIR (4));
+		printw("    V");
         }
 
-	SetConsoleTextAttribute(hCon,WHITE);
-	printf("\n\n\n");
-
+	refresh();	
 	return;
 }
 
-void mostraralu(uint32_t* Rdr, size_t t)
-{
-	HANDLE hCon=GetStdHandle(STD_OUTPUT_HANDLE);
-
-          SetConsoleTextAttribute(hCon,WHITE);
-		printf("\t\tEl %d valor ALU es:  %u\t\t",t+1,*(Rdr+t));
-
-
-	SetConsoleTextAttribute(hCon,WHITE);
-	printf("\n");
-
-	return;
-}
 
 

@@ -1,11 +1,12 @@
-﻿#ifndef _FUNCIONREGISTRO_H_
-#define	_FUNCIONREGISTRO_H_
+#ifndef FUNCIONREGISTRO_H
+#define FUNCIONREGISTRO_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <windows.h>
-#include "colors.h"
+#include <curses.h>
+#include "funcioninterfaz.h"
+
 /**
 * \brief Funcion que muestra los registros
 * \param uint32_t* registros puntero a la primera posicion del arreglo registros
@@ -27,9 +28,7 @@ void mostrarbanderas(uint32_t* banderas, size_t t2);
 * \param size_t t tamaño del arreglo rdr
 * \return 0
 */
-void mostraralu(uint32_t* Rdr, size_t t);
-
+void mostrarinstrucciones(uint32_t* Rdr, size_t t);
 
 
 #endif
-

@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <windows.h>
-#include "colors.h"
+
 
 /**
 * \brief Function ADD
@@ -165,34 +164,34 @@ void ASR(uint32_t Rm,uint32_t corri,uint32_t* Rdr, uint32_t* registros, uint32_t
 * \param uint32_t* Banderas puntero al arreglo donde se guardan las banderas
 * \return 0
 */
-void CMN (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
+int CMN (uint32_t Rn, uint32_t Rm, uint32_t aux, uint32_t* Registros, uint32_t* Banderas);
 
 /**
 * \brief Funcion CMP
 * \param uint32_t Rn primer registro que se va utilizar
 * \param uint32_t Rm segundo registro que se va utilizar
-* \param uint32_t* Rdr puntero a la primera direccion del arreglo donde se guardan los resultados de las ALU
+* \param uint32_t aux variable donde se guardan los resultados de las ALU
 * \param uint32_t* Registros puntero al arreglo de registro
 * \param uint32_t* Banderas puntero al arreglo donde se guardan las banderas
 * \return 0
 */
-void CMP (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
+int CMP (uint32_t Rn, uint32_t Rm, uint32_t aux, uint32_t* Registros, uint32_t* Banderas);
 
 /**
 * \brief Funcion TST
 * \param uint32_t Rn primer registro que se va utilizar
 * \param uint32_t Rm segundo registro que se va utilizar
-* \param uint32_t* Rdr puntero a la primera direccion del arreglo donde se guardan los resultados de las ALU
+* \param uint32_t aux variable donde se guardan los resultados de las ALU
 * \param uint32_t* Registros puntero al arreglo de registro
 * \param uint32_t* Banderas puntero al arreglo donde se guardan las banderas
 * \return 0
 */
-void TST (uint32_t Rn, uint32_t Rm, uint32_t* Rdr, uint32_t* Registros, uint32_t* Banderas);
+int TST (uint32_t Rn, uint32_t Rm, uint32_t aux, uint32_t* Registros, uint32_t* Banderas);
 
 /**
 * \brief Funcion REV
 * \param uint32_t Rm registro que se va utilizar
-* \param uint32_t* Rdr puntero a la primera direccion del arreglo donde se guardan los resultados de las ALU
+* \param uint32_t aux variable donde se guardan los resultados de las ALU
 * \param uint32_t* Registros puntero al arreglo de registro
 * \param uint32_t* Banderas puntero al arreglo donde se guardan las banderas
 * \return 0
