@@ -24,8 +24,7 @@ void mostrarbanderas(uint32_t* banderas, size_t t2);
 
 /**
 * \brief Funcion que mostrara las operaciones aritmetica-logicas
-* \param uint32_t* rdr puntero a la primera posicion del arreglo rdr
-* \param size_t t tamaño del arreglo rdr
+* \param uint32_t* rd puntero a la primera posicion del arreglo rd
 * \return 0
 */
 void mostrarinstrucciones(uint32_t* rd);

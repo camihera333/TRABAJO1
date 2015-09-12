@@ -28,7 +28,7 @@ void mostrarRegistros(uint32_t *registros, size_t t)
 {	
 	int i;
    
-	move(3, 15);	/* Mueve el cursor a la posición y=2, x=34*/
+	move(3, 15);	// Mueve el cursor a la posición y=3, x=15
 	printw("REGISTROS");
 	
 	for(i=0; i<t/2; i++)

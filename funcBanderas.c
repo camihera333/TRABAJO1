@@ -5,7 +5,7 @@
 
 void funcBanderas (uint32_t*rd, uint32_t a, uint32_t b, uint32_t* Banderas)
 {
-	uint32_t c,v,ha,hb,hr;
+	uint32_t c,v,ha,hb,hr;// declaracion de variables 
 	ha=a&(1<<31);
 	hb=b&(1<<31);
 	hr=*rd&(1<<31);
