@@ -12,7 +12,7 @@
 * \param uint32_t* Banderas puntero al arreglo donde se guardan las banderas
 * \return 0
 */
-void funcBanderas (uint32_t Rn, uint32_t Rm, uint32_t Rdr, uint32_t* Registros, uint32_t* Banderas);
+void funcBanderas (uint32_t*rd, uint32_t a, uint32_t b, uint32_t* Banderas);
 /**
 * \brief Funcion funcBanderas1
 * \param uint32_t Rn primer registro que se va utilizar

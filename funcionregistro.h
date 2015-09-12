@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <curses.h>
-#include "funcioninterfaz.h"
 
 /**
 * \brief Funcion que muestra los registros
@@ -29,6 +28,6 @@ void mostrarbanderas(uint32_t* banderas, size_t t2);
 * \param size_t t tamaño del arreglo rdr
 * \return 0
 */
-void mostrarinstrucciones(uint32_t* Rdr, size_t t);
+void mostrarinstrucciones(uint32_t* rd);
 
 #endif

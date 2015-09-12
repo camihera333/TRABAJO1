@@ -11,208 +11,335 @@
 int main(void)
 {
 	//declaracion de variables locales
-    int i, aux,aux2,aux3;
     uint32_t Banderas[4]={0,0,0,0};
-    uint32_t registros[13]={0,2147483645,232,0,0,0,0,0,0,0,0,0,0};
-    uint32_t Rdr[23]={0};
-    uint32_t Rn=1,Rm=2;	
+    uint32_t registros[15]={1426128810,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	
+	
+	clear();
 	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
-	ADD(Rn,Rm,Rdr,registros,Banderas);//suma
+	ADD(&registros[3],registros[0],registros[1]);//suma
 	mvprintw(13,2,"ADD"); 
-	mostrarinstrucciones(Rdr,0); //mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+0),registros,Banderas); //llamado función banderas
-	mostrarbanderas(Banderas,4); //llamado función mostrar banderas
-	getch(); 
-	
-	clear(); //limpia 
-	AND(Rn,Rm,Rdr,registros,Banderas);//AND bit a bit
-	mvprintw(13,2,"AND");
-	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,1); //mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+1),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
-	
-	clear();
-	EOR(Rn,Rm,Rdr,registros,Banderas);//OR exclusiva bit a bit
-	mvprintw(13,2,"EOR");
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,2);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+2),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
-	getch();
+	mvprintw(13,2,"ADD"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();		
 
+	
+	
 	clear();
-	ORR(Rn,Rm,Rdr,registros,Banderas); // or lógica bit a bit
-	mvprintw(13,2,"ORR");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,3);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+3),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
+	AND(&registros[3],registros[0],registros[1]);//and
+	mvprintw(13,2,"AND"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	iniciarinterfaz(); // inicio de la interfaz
 	getch();
-	
-	clear();
-	SUB(Rn,Rm,Rdr,registros,Banderas); //resta
-	mvprintw(13,2,"SUB");
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,4);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+4),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
-	getch();
+	mvprintw(13,2,"AND"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
 	
 	clear();
-	MUL(Rn,Rm,Rdr,registros,Banderas); //multiplica
-	mvprintw(13,2,"MUL");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,5);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+5),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
+	EOR(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"EOR"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
-	
-	clear();
-	BIC(Rn,Rm,Rdr,registros,Banderas); // and entre un registro y el complemento de otro
-	mvprintw(13,2,"BIC");
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,6);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+6),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
-	getch();
+	mvprintw(13,2,"EOR"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
 	
 	clear();
-	LSL(Rn,Rm,Rdr,registros,Banderas); // desplazamiento lógico a la izquierda
-	mvprintw(13,2,"LSL");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,7);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+7),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
+	ORR(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"ORR"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
-	
-	clear();
-	LSR(Rn,Rm,Rdr,registros,Banderas); //desplazamiento lógico a la derecha
-	mvprintw(13,2,"LSR");
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,8);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+8),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
-	getch();
+	mvprintw(13,2,"ORR"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
 	
 	clear();
-    SBC (Rn,Rm,Rdr,registros,Banderas);//resta con carry
-    mvprintw(13,2,"SBC");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,9);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+9),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
+	SUB(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"SUB"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
-	
-	clear();
-	MOV(Rm,Rdr,registros,Banderas); //escribe un valor en registro
-    mvprintw(13,2,"MOV");
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,10);//mostrar instruccion
-	funcBanderas1(Rn,Rm,*(Rdr+10),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
-	getch();
+	mvprintw(13,2,"SUB"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
 	
 	clear();
-    MVN(Rm,Rdr,registros,Banderas); //guarda el complemento de un registro
-    mvprintw(13,2,"MVN");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,11);//mostrar instruccion
-	funcBanderas1(Rn,Rm,*(Rdr+11),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
+	MUL(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"MUL"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
-	
-	clear();
-    RSB(Rm,Rdr,registros,Banderas); //obtiene el complemento a dos de un número
-    mvprintw(13,2,"RSB");
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,12);//mostrar instruccion
-	funcBanderas1(Rn,Rm,*(Rdr+12),registros,Banderas); //llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrarbanderas
-	getch();
+	mvprintw(13,2,"MUL"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
 	
 	clear();
-	ASR(Rn,Rm,Rdr,registros,Banderas); //obtiene el complemento a dos de un número
-    mvprintw(13,2,"ASR");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,13);//mostrar instruccion
-	funcBanderas(Rn,Rm,*(Rdr+13),registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
+	BIC(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"BIC"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
-	
-	clear();
-	aux = CMN(Rn,Rm,aux,registros,Banderas); //suma pero no guarda el resultado, solo modifica banderas
-    mvprintw(13,2,"CMN");
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,14);//mostrar instruccion
-	funcBanderas2(Rn,Rm,aux,registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
-	getch();
+	mvprintw(13,2,"BIC"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
 	
 	clear();
-    aux2 = CMP(Rn,Rm,aux,registros,Banderas); //resta pero no guarda el resultado, solo modifica banderas
-    mvprintw(13,2,"CMP");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,15);//mostrar instruccion
-	funcBanderas2(Rn,Rm,aux,registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
+	LSL(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"LSL"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
-	
-	
-	aux3 = TST(Rn,Rm,aux,registros,Banderas); //resta pero no guarda el resultado, solo modifica banderas
-    mvprintw(13,2,"TST");
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	mostrarinstrucciones(Rdr,16);//mostrar instruccion
-	funcBanderas2(Rn,Rm,aux,registros,Banderas);//llamado función banderas
-	mostrarbanderas(Banderas,4);//llamado función mostrar banderas
-	getch();
+	mvprintw(13,2,"LSL"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
 	
 	clear();
-	REV(Rm,Rdr,registros,Banderas); //cambia el orden de los bits
-	mvprintw(13,2,"REV");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
+	LSR(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"LSR"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
-	
-	clear();
-	mvprintw(13,2,"REV16");
-	REV16(Rm,Rdr,registros,Banderas); //cambia el orden de los bits cada 16 bits
-    mostrarRegistros(registros,13); //mostrar registros
-	getch();
-	
-	clear();
-	mvprintw(13,2,"REVSH");
-	REVSH(Rm,Rdr,registros,Banderas); //cambia el orden de los bits del halfword bajo
-    mostrarRegistros(registros,13); //mostrar registros
-	getch();
-	
-	clear();
-	ROR(Rm,Rn,Rdr,registros,Banderas); // rotación a la derecha
-    mvprintw(13,2,"ROR"); 
+	clear ();
 	mostrarRegistros(registros,13); //mostrar registros
-	getch();
+	mvprintw(13,2,"LSR"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
 	
+		
 	clear();
-	ADC(Rn,Rm,Rdr,registros,Banderas);// suma con carry
-	mvprintw(13,2,"ADC");
+	iniciarinterfaz(); // inicio de la interfaz
 	mostrarRegistros(registros,13); //mostrar registros
+	SBC(&registros[3],registros[0],registros[1], Banderas);//EO
+	mvprintw(13,2,"SBC"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"SBC"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
 	
 	clear();
-    NOP(); //no hace nada
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	ADC(&registros[3],registros[0],registros[1], Banderas);//EO
+	mvprintw(13,2,"ADC"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"ADC"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	MOV(&registros[3],registros[0]);//EO
+	mvprintw(13,2,"MOV"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"MOV"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	MVN(&registros[3],registros[0]);//EO
+	mvprintw(13,2,"MVN"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"MVN"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	RSB(&registros[3],registros[0]);//EO
+	mvprintw(13,2,"RSB"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"RSB"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	ROR(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"ROR"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"ROR"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	NOP ();
+	mvprintw(13,2,"NOP"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
 	getch();
 	
-	for(i=17;i<=21;i++)
-    {
-        mostrarinstrucciones(Rdr,i);
-        mostrarbanderas(Banderas,4);
-		printw("\n");
-		refresh();
-    }
 	
-	//terminarinterfaz();
-	endwin();
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	CMN(registros[0],registros[1],Banderas);//EO
+	mvprintw(13,2,"CMN"); 
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"CMN"); 
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
 	
-}	
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	CMP(registros[0],registros[1],Banderas);//EO
+	mvprintw(13,2,"CMP"); 
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"CMP"); 
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	TST(registros[0],registros[1],Banderas);//EO
+	mvprintw(13,2,"TST"); 
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"TST"); 
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	ASR(&registros[3],registros[0],registros[1]);//EO
+	mvprintw(13,2,"ASR"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"ASR"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	REV(&registros[3],registros[0]);//EO
+	mvprintw(13,2,"REV"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"REV"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	REV16(&registros[3],registros[0]);//EO
+	mvprintw(13,2,"REV16"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"REV16"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	clear();
+	iniciarinterfaz(); // inicio de la interfaz
+	mostrarRegistros(registros,13); //mostrar registros
+	REVSH(&registros[3],registros[0]);//EO
+	mvprintw(13,2,"REVSH"); 
+	funcBanderas(&registros[3],registros[0],registros[1],Banderas); //llamado función banderas
+	getch();
+	clear ();
+	mostrarRegistros(registros,13); //mostrar registros
+	mvprintw(13,2,"REVSH"); 
+    mostrarinstrucciones(&registros[3]); //mostrar instruccion
+    mostrarbanderas(Banderas,4); //llamado función mostrar banderas
+	getch ();
+	
+	return 0;
+	
+}

@@ -3,12 +3,10 @@
 #include "funcBanderas.h"
 
 
- void mostrarinstrucciones(uint32_t* Rdr, size_t t) //funcion que muestra las instrucciones
+ void mostrarinstrucciones(uint32_t* rd) //funcion que muestra las instrucciones
 {
-    int i;
-		
 	    attron (COLOR_PAIR (1));
-		mvprintw(13,5,":%u",*(Rdr+t));
+		mvprintw(13,7,":%u",*rd);
 
 	refresh();	
 
