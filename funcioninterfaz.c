@@ -15,6 +15,8 @@ void iniciarinterfaz ()
 
 	init_pair(1, COLOR_GREEN, COLOR_BLACK);
     init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+	attroff(COLOR_PAIR(2)); //se finaliza el color
+	attroff(COLOR_PAIR(1)); //se finaliza el color
 }
 
 
@@ -28,29 +30,36 @@ void mostrarRegistros(uint32_t *registros, size_t t)
 {	
 	int i;
    
-	move(3, 15);	// Mueve el cursor a la posición y=3, x=15
+   init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(3, COLOR_WHITE, COLOR_BLACK);
+	move(2, 27);	/* Mueve el cursor a la posición y=2, x=34*/
+	attron(COLOR_PAIR(3));
 	printw("REGISTROS");
-	
-	for(i=0; i<t/2; i++)
-	{	move(5+i, 2);	//se pone el cursor en la posicion deseda
+	attroff(COLOR_PAIR(3));
+
+	for(i=0; i<t/2-1; i++)
+	{	move(5+i, 10);	//se pone el cursor en la posicion deseda
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i); 
 		attron(COLOR_PAIR(2)); // se inicializa el color
 		printw("%u\t\t", registros[i]); //se imprime el resultado
 	}
 	for(i=(t/4)+2; i<=(t/2)+2; i++)
-	{	move(1+i, 20);	 //se pone el cursor en la posicion deseda
+	{	move(i, 25);	 //se pone el cursor en la posicion deseda
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i);
 		attron(COLOR_PAIR(2)); // se inicializa el color
 		printw("%u\t\t", registros[i]); //se imprime el resultado
 	}
 	for(i=(t/2)+3; i<=(t/2)+6; i++)
-	{	move(-4+i, 35);	 //se pone el cursor en la posicion deseda
+	{	move(-4+i, 40);	 //se pone el cursor en la posicion deseda
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i);
 		attron(COLOR_PAIR(2)); // se inicializa el color
 		printw("%u\t\t", registros[i]); //se imprime el resultado
+		attroff(COLOR_PAIR(2)); //se finaliza el color
+		attroff(COLOR_PAIR(1)); //se finaliza el color
 	}
 			
 	attroff(COLOR_PAIR(2)); //se finaliza el color

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-
+#include <curses.h>
 
 /**
 * \brief Function ADD
@@ -20,7 +20,6 @@ void ADD (uint32_t* rd, uint32_t a, uint32_t b);
 * \return 0
 */
 void AND (uint32_t* rd, uint32_t a, uint32_t b);
-
 /**
 * \brief Function EOR
 * \param uint32_t* rd puntero a la primera direccion del arreglo
@@ -202,4 +201,3 @@ void REV16(uint32_t* rd,uint32_t a);
 * \return 0
 */
 void REVSH(uint32_t* rd,uint32_t a);
-

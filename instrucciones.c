@@ -20,44 +20,41 @@ void EOR (uint32_t* rd, uint32_t a, uint32_t b) //or exclusiva bit a bit
 }
 
 
-void ORR (uint32_t* rd, uint32_t a, uint32_t b)//or lÛgica bit a bit
+void ORR (uint32_t* rd, uint32_t a, uint32_t b)//or l√≥gica bit a bit
 {
     *rd=a|b;  //En la variable rd  se guarda el resultado de la ORR de los valores a y b
 }
-
 
 void SUB (uint32_t* rd, uint32_t a, uint32_t b) // resta
 {
     *rd=a-b; //En la variable rd  se guarda el resultado de la resta de los valores a y b
 }
 
-
 void MUL (uint32_t* rd, uint32_t a, uint32_t b) //multiplicacion
 {
-    *rd=a*b; //En la variable rd  se guarda el resultado de la multiplicaciÛn de los valores a y b 
+    *rd=a*b; //En la variable rd  se guarda el resultado de la multiplicaci√≥n de los valores a y b 
 }
-
 
 void BIC (uint32_t* rd, uint32_t a, uint32_t b)//and entre un registro y el complemento de otro
 {
-    *rd=a&~b; //En la variable rd  se guarda el resultado del AND entre el valor a y el negado de b
+    *rd=a&(~b); //En la variable rd  se guarda el resultado del AND entre el valor a y el negado de b
 }
 
 
-void LSL (uint32_t* rd, uint32_t a, uint32_t b) //desplazamiento lÛgico a la izquierda
+void LSL (uint32_t* rd, uint32_t a, uint32_t b) //desplazamiento l√≥gico a la izquierda
 {
-    *rd=a<<b;  //En la variable rd se guarda el resultado del desplazamiento lÛgico a la izquierda de los valores a y b
+    *rd=a<<b;  //En la variable rd se guarda el resultado del desplazamiento l√≥gico a la izquierda de los valores a y b
 }
 
 
-void LSR (uint32_t* rd, uint32_t a, uint32_t b) //desplazamiento lÛgico a la derecha
+void LSR (uint32_t* rd, uint32_t a, uint32_t b) //desplazamiento l√≥gico a la derecha
 {
-    *rd=a>>b;  //En la variable rd se guarda el resultado del desplazamiento lÛgico a la derecha de los valores a y b
+    *rd=a>>b;  //En la variable rd se guarda el resultado del desplazamiento l√≥gico a la derecha de los valores a y b
 }
 
 void SBC (uint32_t* rd, uint32_t a, uint32_t b, uint32_t* Banderas) // resta con carry
 {
-    if(*(Banderas+2)==1) // condicional que expresa que si la bandera de carry est· encendida, ingrese al if
+    if(*(Banderas+2)==1) // condicional que expresa que si la bandera de carry est√° encendida, ingrese al if
 		*rd=a-b-1; //guarda en rd la resta de a y b y se le resta un 1
 	else
 		*rd=a-b; //guarda en rd la resta de a y b
@@ -65,13 +62,13 @@ void SBC (uint32_t* rd, uint32_t a, uint32_t b, uint32_t* Banderas) // resta con
 
 void ADC (uint32_t* rd, uint32_t a, uint32_t b, uint32_t* Banderas) // suma con carry
 {
-    if(*(Banderas+2)==1) // condicional que expresa que si la bandera de carry est· encendida, ingrese al if
+    if(*(Banderas+2)==1) // condicional que expresa que si la bandera de carry est√° encendida, ingrese al if
 		*rd=a+b+1; //guarda en rd la resta de a y b y se le resta un 1
 	else
 		*rd=a+b; //guarda en rd la resta de a y b
 }
 
-void MOV (uint32_t* rd, uint32_t a) // Escribe un valor en un registro
+void MOV(uint32_t* rd, uint32_t a) // Escribe un valor en un registro
 {
     *rd=a; // guarda en la variable rd, el valor de a
 }
@@ -83,21 +80,21 @@ void MVN (uint32_t* rd, uint32_t a) // Guarda el complemento de un valor
 
 void RSB (uint32_t* rd, uint32_t a) // Obtiene en complemento a dos de un valor
 {
-    *rd=~a+1; // guarda en la variable rd, el valor de a negado m·s un uno, para hacer el complemento a dos
+    *rd=~a+1; // guarda en la variable rd, el valor de a negado m√°s un uno, para hacer el complemento a dos
 }
 
-void ROR(uint32_t* rd,uint32_t a,uint32_t b) // rotaciÛn a la derecha
+void ROR(uint32_t* rd,uint32_t a,uint32_t b) // rotaci√≥n a la derecha
 {
     int i,j; //variables locales
     uint32_t A=0,help; //variables locales
-	j=32-b; //auxiliar para saber en que posiciÛn quedan los valores corridos
-    for(i=0;i<32;i++) //ciclo para hallar m·scara
+	j=32-b; //auxiliar para saber en que posici√≥n quedan los valores corridos
+    for(i=0;i<32;i++) //ciclo para hallar m√°scara
     {
         if((i>=0)&&(i<b)) //condicion para poner en 1 los bits movidos
             A=A|(1<<i);
     }
-    help=a&A; //and del numero y la m·scara para extraer los numeros corridos
-    *rd=(help<<j)|(a>>b); //or entre los n˙meros extraidos (corridos j veces) y el valor inicial corrido b veces hacia la derecha
+    help=a&A; //and del numero y la m√°scara para extraer los numeros corridos
+    *rd=(help<<j)|(a>>b); //or entre los n√∫meros extraidos (corridos j veces) y el valor inicial corrido b veces hacia la derecha
 }
 
 void NOP () //no hace nada
@@ -108,7 +105,7 @@ void CMN (uint32_t a, uint32_t b, uint32_t* Banderas) // suma pero no guarda el 
 {	
 	uint32_t i; //variables locales
 	i=a+b; //guarda en la variable local i, el valor de la suma entre a y b
-	funcBanderas(&i,a,b,Banderas); //llama a la funcion funcBanderas, para modificar las banderas m·s no guarda el resultado
+	funcBanderas(&i,a,b,Banderas); //llama a la funcion funcBanderas, para modificar las banderas m√°s no guarda el resultado
 }
 
 
@@ -116,23 +113,23 @@ void CMP (uint32_t a, uint32_t b, uint32_t* Banderas) // resta pero no guarda el
 {	
 	uint32_t i; //variables locales
 	i=a-b; //guarda en la variable local i, el valor de la resta entre a y b
-	funcBanderas(&i,a,b,Banderas); //llama a la funcion funcBanderas, para modificar las banderas m·s no guarda el resultado
+	funcBanderas(&i,a,b,Banderas); //llama a la funcion funcBanderas, para modificar las banderas m√°s no guarda el resultado
 }
 
 void TST (uint32_t a, uint32_t b, uint32_t* Banderas) // AND bit a bit pero no guarda el resultado, solo modifica banderas
 {	
 	uint32_t i; //variables locales
 	i=a&b;//guarda en la variable local i, el valor de la AND entre a y b
-	funcBanderas(&i,a,b,Banderas); //llama a la funcion funcBanderas, para modificar las banderas m·s no guarda el resultado
+	funcBanderas(&i,a,b,Banderas); //llama a la funcion funcBanderas, para modificar las banderas m√°s no guarda el resultado
 }
 
 
-void ASR(uint32_t* rd,uint32_t a,uint32_t b) // desplazamiento aritmÈtico a la derecha
+void ASR(uint32_t* rd,uint32_t a,uint32_t b) // desplazamiento aritm√©tico a la derecha
 {
     
     uint32_t j,i,k; //variables locales
-	i=(1<<31)&a; //m·scara para hallar el valor del bit 32
-	k=~(1<<31)&a; //m·scara para extraer el valor a desplazar negado 
+	i=(1<<31)&a; //m√°scara para hallar el valor del bit 32
+	k=~(1<<31)&a; //m√°scara para extraer el valor a desplazar negado 
 	j=k>>b; //corre k b veces y lo guarda en j
 	*rd=i|j; //guarda en rd el valor de la ORR entre i y j
 }
@@ -143,16 +140,16 @@ void REV (uint32_t* rd,uint32_t a)  // cambia el orden de los bits
 	uint32_t mas1=0,mas2=0,mas3=0,mas4=0,h1,h2,h3,h4; //variables locales
 	for (i=0; i<32;i++) // ciclo para recorrer cada bit
 	{
-		if ((i>=0)&&(i<8)) //condiciÛn para sÛlo operar con los bits del 0 al 7
-		mas1=(1<<i)|mas1; //en m·scara1 guarda los  bits del 0 al 7
+		if ((i>=0)&&(i<8)) //condici√≥n para s√≥lo operar con los bits del 0 al 7
+		mas1=(1<<i)|mas1; //en m√°scara1 guarda los  bits del 0 al 7
 	
-		if ((i>=8)&&(i<16))//condiciÛn para sÛlo operar con los bits del 8 al 15
+		if ((i>=8)&&(i<16))//condici√≥n para s√≥lo operar con los bits del 8 al 15
 		mas2=(1<<i)|mas2; //en mas2 guarda los  bits del 8 al 15
 	
-		if ((i>=16)&&(i<24))//condiciÛn para sÛlo operar con los bits del 16 al 23
+		if ((i>=16)&&(i<24))//condici√≥n para s√≥lo operar con los bits del 16 al 23
 		mas3=(1<<i)|mas3; //en mas1 guarda los  bits del 16 al 23
 	
-		if ((i>=24)&&(i<32))//condiciÛn para sÛlo operar con los bits del 24 al 31
+		if ((i>=24)&&(i<32))//condici√≥n para s√≥lo operar con los bits del 24 al 31
 		mas4=(1<<i)|mas4; //en mas4 guarda los  bits del 24 al 31
 	}
 	h1=mas1&a;//en h1 guarda los  bits del 0 al 7
@@ -170,16 +167,16 @@ void REV16 (uint32_t* rd,uint32_t a)  // cambia el orden de los bits
 	uint32_t mas1=0,mas2=0,mas3=0,mas4=0,h1,h2,h3,h4; //variables locales
 	for (i=0; i<32;i++) // ciclo para recorrer cada bit
 	{
-		if ((i>=0)&&(i<8)) //condiciÛn para sÛlo operar con los bits del 0 al 7
-		mas1=(1<<i)|mas1; //en m·scara1 guarda los  bits del 0 al 7
+		if ((i>=0)&&(i<8)) //condici√≥n para s√≥lo operar con los bits del 0 al 7
+		mas1=(1<<i)|mas1; //en m√°scara1 guarda los  bits del 0 al 7
 	
-		if ((i>=8)&&(i<16))//condiciÛn para sÛlo operar con los bits del 8 al 15
+		if ((i>=8)&&(i<16))//condici√≥n para s√≥lo operar con los bits del 8 al 15
 		mas2=(1<<i)|mas2; //en mas2 guarda los  bits del 8 al 15
 	
-		if ((i>=16)&&(i<24))//condiciÛn para sÛlo operar con los bits del 16 al 23
+		if ((i>=16)&&(i<24))//condici√≥n para s√≥lo operar con los bits del 16 al 23
 		mas3=(1<<i)|mas3; //en mas1 guarda los  bits del 16 al 23
 	
-		if ((i>=24)&&(i<32))//condiciÛn para sÛlo operar con los bits del 24 al 31
+		if ((i>=24)&&(i<32))//condici√≥n para s√≥lo operar con los bits del 24 al 31
 		mas4=(1<<i)|mas4; //en mas4 guarda los  bits del 24 al 31
 	}
 	h1=mas1&a;//en h1 guarda los  bits del 0 al 7
@@ -191,13 +188,13 @@ void REV16 (uint32_t* rd,uint32_t a)  // cambia el orden de los bits
 	
 }
 
-void REVSH (uint32_t* rd,uint32_t a) //Cambia el orden de los bits, hace extensiÛn de sÌmbolo
+void REVSH (uint32_t* rd,uint32_t a) //Cambia el orden de los bits, hace extensi√≥n de s√≠mbolo
 {
 	int i; //variable local
 	uint32_t mas1=0,mas2=0,h1; //variables locales
 	for (i=8; i<32;i++) // ciclo para recorrer cada bit
 	{
-		if((i>=8)&&(i<16))  //condiciÛn para sÛlo operar con los bits del 8 al 15
+		if((i>=8)&&(i<16))  //condici√≥n para s√≥lo operar con los bits del 8 al 15
 		mas1=(1<<i)|mas1; //en mas1 guarda los  bits del 8 al 15
 	
 		if (i>=8) //condicion para los bits mayores a 8
@@ -211,3 +208,4 @@ void REVSH (uint32_t* rd,uint32_t a) //Cambia el orden de los bits, hace extensi
 		*rd=(h1>>8); //guarde en rd el valor desplazado 8 veces a la derecha
 	
 }
+

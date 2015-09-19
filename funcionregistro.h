@@ -22,11 +22,4 @@ void mostrarregistros(uint32_t* registros, size_t t);
 */
 void mostrarbanderas(uint32_t* banderas, size_t t2);
 
-/**
-* \brief Funcion que mostrara las operaciones aritmetica-logicas
-* \param uint32_t* rd puntero a la primera posicion del arreglo rd
-* \return 0
-*/
-void mostrarinstrucciones(uint32_t* rd);
-
 #endif
