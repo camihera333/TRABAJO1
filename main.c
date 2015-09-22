@@ -12,7 +12,7 @@ int main(void)
 {	
 	//declaracion de variables locales
 	uint32_t Banderas[4]={0};
-    uint32_t registros[16]={3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint32_t registros[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	
 	//------- No modificar ------//	
 		int i, num_instructions;

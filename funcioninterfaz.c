@@ -43,21 +43,21 @@ void mostrarRegistros(uint32_t *registros, size_t t)
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i); 
 		attron(COLOR_PAIR(2)); // se inicializa el color
-		printw("%u\t\t", registros[i]); //se imprime el resultado
+		printw("%X\t\t", registros[i]); //se imprime el resultado
 	}
 	for(i=(t/4)+2; i<=(t/2)+2; i++)
 	{	move(i, 25);	 //se pone el cursor en la posicion deseda
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i);
 		attron(COLOR_PAIR(2)); // se inicializa el color
-		printw("%u\t\t", registros[i]); //se imprime el resultado
+		printw("%X\t\t", registros[i]); //se imprime el resultado
 	}
 	for(i=(t/2)+3; i<=(t/2)+6; i++)
 	{	move(-4+i, 40);	 //se pone el cursor en la posicion deseda
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i);
 		attron(COLOR_PAIR(2)); // se inicializa el color
-		printw("%u\t\t", registros[i]); //se imprime el resultado
+		printw("%X\t\t", registros[i]); //se imprime el resultado
 		attroff(COLOR_PAIR(2)); //se finaliza el color
 		attroff(COLOR_PAIR(1)); //se finaliza el color
 	}

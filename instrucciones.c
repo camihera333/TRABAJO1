@@ -112,8 +112,8 @@ void CMN (uint32_t a, uint32_t b, uint32_t* Banderas) // suma pero no guarda el 
 void CMP (uint32_t a, uint32_t b, uint32_t* Banderas) // resta pero no guarda el resultado, solo modifica banderas
 {	
 	uint32_t i; //variables locales
-	i=a-b; //guarda en la variable local i, el valor de la resta entre a y b
-	funcBanderas(&i,a,b,Banderas); //llama a la funcion funcBanderas, para modificar las banderas más no guarda el resultado
+	i=a+(~b)+1; //guarda en la variable local i, el valor de la resta entre a y b
+	funcBanderas(&i,a,((~b)+1),Banderas); //llama a la funcion funcBanderas, para modificar las banderas más no guarda el resultado
 }
 
 void TST (uint32_t a, uint32_t b, uint32_t* Banderas) // AND bit a bit pero no guarda el resultado, solo modifica banderas

@@ -495,14 +495,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 	}
 	//B
 	if( strcmp(instruction.mnemonic,"B") == 0 ){ //comparando caracteres con los del archivo txt
-			registros[15]=instruction.op1_value; //guarda en pc el valor del operando 1
+			registros[15]+=instruction.op1_value; //guarda en pc el valor del operando 1
 	}
 
 	//BL
 	if( strcmp(instruction.mnemonic,"BL") == 0 ){ //comparando caracteres con los del archivo txt
 
 			a=registros[15]; //guarda en a el valor de pc
-			registros[15]=a+instruction.op1_value; //guarda en pc el valor del operando 1+a
+			registros[15]+=instruction.op1_value; //guarda en pc el valor del operando 1+a
 			registros[14]=a+1; //guarda en LR el valor de a +1
 	}
 
