@@ -1,6 +1,48 @@
 #include "funcionregistro.h"
 #include "funcBanderas.h"
 #include <stdint.h>
+#include "instrucciones.h"
+#include "funcioninterfaz.h"
+
+
+uint32_t BitCount(uint32_t* register_list)
+{
+	uint32_t cont=0;
+	int i;
+      for(i=0;i=14;i++)
+	  {
+		  if((i<=7)||(i==14))
+		  {
+			   if(register_list[i]==1)
+			   cont=cont+1;
+		  }
+			 
+	  }
+	  return cont;
+}
+
+void push (uint32_t* registros,uint8_t* register_list)
+{
+	uint32_t BitCount(uint32_t* register_list);
+	uint8_t memory[70];
+	uint32_t address;
+	int i;
+	address=registros[13]-4*BitCount(register_list);
+	for(i=0;i<=14;i++)
+	{
+		if(registros[i]==1)
+		{
+			
+			memory[address]=(uint8_t)(registros[i]);
+			memory[address+1]=(uint8_t)(registros[i]>>8);
+			memory[address+2]=(uint8_t)(registros[i]>>16);
+			memory[address+3]=(uint8_t)(registros[i]>>24);
+			address=address+4;
+			}
+		}
+	registros[13]=registros[13]-4*BitCount(register_list);
+	mostrar_memoria(memory);
+}
 
 
  void ADD (uint32_t* rd, uint32_t a, uint32_t b) //suma 

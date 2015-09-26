@@ -12,7 +12,8 @@ int main(void)
 {	
 	//declaracion de variables locales
 	uint32_t Banderas[4]={0};
-    uint32_t registros[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	uint32_t cont=0;
+    uint32_t registros[16]={0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	
 	//------- No modificar ------//	
 		int i, num_instructions;
@@ -68,6 +69,16 @@ int main(void)
 			timeout(-1000); //función para poner de nuevo la interfaz paso a paso
 		}
 		
+		if(ch=='C') //ciclo infinito hasta que se presione la tecla P, pausar
+		{
+			erase();
+			//uint32_t BitCount(cont);
+			//push (registros,cont);
+			
+		}
+		if(ch!='C')
+		{
+		
 		refresh();
 		mostrarRegistros(registros,13); //mostrar registros
 		refresh();
@@ -86,10 +97,13 @@ int main(void)
 		refresh();	
 		init_pair(6, COLOR_WHITE, COLOR_BLACK); //definición el par de color 6
 		attron(COLOR_PAIR(6)); //inicia el color 6
-		mvprintw(23,6,"BOTONES DE AYUDA: R=Reiniciar A=Automatico P=Parar S=salir"); //mostrar en pantalla los botones de ayuda
+		mvprintw(23,3,"BOTONES DE AYUDA: R=Reiniciar A=Automatico P=Parar C=Cambio modo S=salir"); //mostrar en pantalla los botones de ayuda
 		attroff(COLOR_PAIR(6)); //finaliza el color 6
 		refresh();
+		}	
 	}
+	
+	
 	
 
 	//------- No modificar ------//	

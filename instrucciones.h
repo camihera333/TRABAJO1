@@ -3,6 +3,10 @@
 #include <stdint.h>
 #include <curses.h>
 
+
+void push (uint32_t* registros,uint8_t* register_list);
+
+uint32_t BitCount(uint32_t* registros);
 /**
 * \brief Function ADD
 * \param uint32_t* rd puntero a la primera direccion del arreglo

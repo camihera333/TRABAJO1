@@ -19,6 +19,30 @@ void iniciarinterfaz ()
 	attroff(COLOR_PAIR(1)); //se finaliza el color
 }
 
+void mostrar_memoria(uint8_t *memory){
+	erase();
+	int size=60;
+	int i;
+	attron(COLOR_PAIR(1));
+	mvprintw(2,30,"RAM");
+	mvprintw(24,60,"Continuar:");
+	attroff(COLOR_PAIR(1));
+	attron(COLOR_PAIR(2));
+	mvprintw(24,71,"P");
+	for(i=0;i<=size;i++){
+		if(i<=20){
+			mvprintw(3+i,0,"%d",memory[i]);
+		}
+		if((i>20)&&(i<=40)){
+			mvprintw(3+i-20,25,"%d",memory[i]);
+		}
+		if(i>40){
+			mvprintw(3+i-40,50,"%d",memory[i]);
+		}
+	}
+	attroff(COLOR_PAIR(2));   //imprime en pantalla la memoria que se realiza con los ciclos 
+}
+
 
 void refreshScreen(void)
 {
