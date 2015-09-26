@@ -19,17 +19,17 @@ void iniciarinterfaz ()
 	attroff(COLOR_PAIR(1)); //se finaliza el color
 }
 
-void mostrar_memoria(uint8_t *memory){
+
+void mostrarmemoria(uint8_t *memory){
 	erase();
-	int size=60;
-	int i;
-	attron(COLOR_PAIR(1));
-	mvprintw(2,30,"RAM");
-	mvprintw(24,60,"Continuar:");
-	attroff(COLOR_PAIR(1));
-	attron(COLOR_PAIR(2));
-	mvprintw(24,71,"P");
-	for(i=0;i<=size;i++){
+	int size=60; //tamaño 
+	int i; //variable local
+	attron(COLOR_PAIR(1)); //inicio de color
+	mvprintw(3,28,"Memoria Ram");  //mostrar en pantalla meoria ram
+	attroff(COLOR_PAIR(1)); //finalización de color
+	attron(COLOR_PAIR(2)); //inicio de color
+	mvprintw(24,71,"P"); //imprimir
+	for(i=0;i<=size;i++){ //ciclo para mostrar la memoria
 		if(i<=20){
 			mvprintw(3+i,0,"%d",memory[i]);
 		}

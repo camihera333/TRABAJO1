@@ -5,35 +5,35 @@
 #include "funcioninterfaz.h"
 
 
-uint32_t BitCount(uint32_t* register_list)
+uint32_t BitCount(uint32_t* register_list) //declaración de función BitCount
 {
-	uint32_t cont=0;
+	uint32_t cont=0; //declaración variables locales
 	int i;
-      for(i=0;i=14;i++)
-	  {
-		  if((i<=7)||(i==14))
+      for(i=0;i=14;i++) //ciclo que va hasta el número de registros
+	  { 
+		  if((i<=7)||(i==14)) //condicional
 		  {
 			   if(register_list[i]==1)
-			   cont=cont+1;
+			   cont=cont+1; //aumenta el contador 
 		  }
 			 
 	  }
 	  return cont;
 }
 
-void push (uint32_t* registros,uint8_t* register_list)
+void push (uint32_t* registros,uint8_t* register_list)  //declaración de función push
 {
-	uint32_t BitCount(uint32_t* register_list);
-	uint8_t memory[70];
-	uint32_t address;
-	int i;
-	address=registros[13]-4*BitCount(register_list);
-	for(i=0;i<=14;i++)
+	uint32_t BitCount(uint32_t* register_list); //declaración variables locales
+	uint8_t memory[70];//declaración variables locales
+	uint32_t address;//declaración variables locales
+	int i;//declaración variables locales
+	address=registros[13]-4*BitCount(register_list); 
+	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
 	{
 		if(registros[i]==1)
 		{
 			
-			memory[address]=(uint8_t)(registros[i]);
+			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
 			memory[address+1]=(uint8_t)(registros[i]>>8);
 			memory[address+2]=(uint8_t)(registros[i]>>16);
 			memory[address+3]=(uint8_t)(registros[i]>>24);
@@ -41,7 +41,7 @@ void push (uint32_t* registros,uint8_t* register_list)
 			}
 		}
 	registros[13]=registros[13]-4*BitCount(register_list);
-	mostrar_memoria(memory);
+	mostrar_memoria(memory); //muestra memoria
 }
 
 

@@ -3,6 +3,13 @@
 #include <stdint.h>
 #include <curses.h>
 
+
+/**
+* \brief Funcion memoria
+* \param uint8_t* memory, valor que hace referencia a la memoria
+* \return 0
+*/
+void mostrarmemoria(uint8_t *memory)
 /**
 * \brief Funcion iniciarinterfaz
 * \return 0
