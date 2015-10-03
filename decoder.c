@@ -3,9 +3,21 @@
 #include "funcBanderas.h"
 
 
-void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t* Banderas)
+void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t* Banderas, uint8_t* memory)
 {
 	uint32_t a;
+	// PUSH
+	if(( strcmp(instruction.mnemonic,"push") == 0 ))
+	{		
+	push (registros,instruction.registers_list,memory);
+	registros[15]++;
+	}
+	//POP
+	if(( strcmp(instruction.mnemonic,"pop") == 0 ))
+	{		
+	pop(registros,instruction.registers_list,memory);
+	registros[15]++;
+	}
 	//Función ADD
 	if(( strcmp(instruction.mnemonic,"ADDS") == 0 )||(strcmp(instruction.mnemonic,"ADD") == 0)){ //comparando caracteres con los del archivo txt
 		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
@@ -642,46 +654,71 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 
 instruction_t getInstruction(char* instStr)
 {
-	instruction_t instruction;
+	instruction_t instruction=
+	{
+		.registers_list = {0},
+		.op3_type  = 'N',
+		.op3_value = 0
+	};
 	char* split = (char*)malloc(strlen(instStr)+1);
 	int num=0;
-
+	
 	strcpy(split, instStr);
-	/* Obtiene el mnemonico de la instrucción */
+	/* Obtiene el mnemonico de la instrucción */	
 	split = strtok(split, " ,");
 	strcpy(instruction.mnemonic, split);
-
-	/* Separa los operandos */
+	
+	/* Separa los operandos */	
 	while (split != NULL)
 	{
 		switch(num){
 			case 1:
-				instruction.op1_type  = split[0];
-				instruction.op1_value = (uint32_t)strtol(split+1, NULL, 0);
+				if(split[0] == '{'){
+					instruction.op1_type  = split[0];
+					split++;
+					do{
+						if(split[0]=='L')
+							instruction.registers_list[14] = 1;
+						else if(split[0]=='P')
+							instruction.registers_list[15] = 1;
+						else
+							instruction.registers_list[(uint8_t)strtoll(split+1, NULL, 0)] = 1;
+							
+						split = strtok(NULL, ",");
+					}while(split != NULL);
+				}else{
+					instruction.op1_type  = split[0];
+					instruction.op1_value = (uint32_t)strtoll(split+1, NULL, 0);
+				}					
 				break;
-
+			
 			case 2:
 				instruction.op2_type  = split[0];
-				instruction.op2_value = (uint32_t)strtol(split+1, NULL, 0);
+				instruction.op2_value = (uint32_t)strtoll(split+1, NULL, 0);
 				break;
-
+			
 			case 3:
 				instruction.op3_type  = split[0];
-				instruction.op3_value = (uint32_t)strtol(split+1, NULL, 0);
+				instruction.op3_value = (uint32_t)strtoll(split+1, NULL, 0);			
 				break;
 		}
-
-		split = strtok(NULL, " ,.");
-		num++;
+		if(split != NULL){
+			split = strtok(NULL, " ,.");
+			num++;
+		}	
+	}	
+	
+	if(instruction.op1_type == 'L'){
+		instruction.op1_value = 14;
+		instruction.op1_type = 'R';
+	}
+	
+	if(instruction.op1_type == '{'){
+		instruction.op1_type = 'P';
 	}
 
-	if(num==3){
-		instruction.op3_type  = 'N';
-		instruction.op3_value = 0;
-	}
-
-	free(split);
-
+	free(split);	
+	
 	return instruction;
 }
 
@@ -691,13 +728,13 @@ int readFile(char* filename, ins_t* instructions)
 	int lines;	/* Cantidad de líneas del archivo */
 	int line=0;	/* Línea leida */
 	char buffer[50]; /* Almacena la cadena leida */
-
+		
 	fp = fopen(filename, "r");	/* Abrir el archivo como solo lectura */
 	if( fp==NULL )
 		return -1;	/* Error al abrir el archivo */
-
+	
 	lines = countLines(fp);	/* Cantidad de líneas*/
-
+	
 	/* Asignación dinámica de memoria para cada instrucción */
 	instructions->array = (char**)malloc(lines*sizeof(char*));
 	while ( fgets(buffer, 50, fp) != NULL && line<lines ){
@@ -705,22 +742,23 @@ int readFile(char* filename, ins_t* instructions)
 		strcpy(instructions->array[line], buffer);
 		line++;
  	}
-
+	
 	fclose(fp);	/* Cierra el archivo */
 
 	return lines;
-}
+}	
 
 
 int countLines(FILE* fp)
 {
 	int lines=0;
 	char buffer[50];
-
+	
 	while( fgets(buffer, 50, fp) != NULL )
 		lines++;
-
+	
 	rewind(fp);
-
+	
 	return lines;
 }
+

@@ -23,6 +23,7 @@ typedef struct
 	uint32_t op1_value;
 	uint32_t op2_value;
 	uint32_t op3_value;
+	uint8_t  registers_list[16];
 }instruction_t;
 
 
@@ -30,7 +31,7 @@ typedef struct
     \brief Decodifica la instrucción y la ejecuta.
     \param instruction instrucción a decodificar y ejecutar.
 */
-void decodeInstruction(instruction_t instruction, uint32_t* registros,uint32_t* Banderas);
+void decodeInstruction(instruction_t instruction, uint32_t* registros,uint32_t* Banderas,uint8_t* memory);
 
 /** \fn instruction_t getInstruction(char* instStr)
     \brief Obtiene la instrucción separada por partes.

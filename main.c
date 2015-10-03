@@ -13,7 +13,10 @@ int main(void)
 	//declaracion de variables locales
 	uint32_t Banderas[4]={0};
 	uint32_t cont=0;
-    uint32_t registros[16]={0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint32_t registros[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,256,0,0};
+	uint8_t memory[256];//declaración variables locales
+
+	
 	
 	//------- No modificar ------//	
 		int i, num_instructions;
@@ -21,7 +24,7 @@ int main(void)
 		char** instructions;
 		instruction_t instruction;
 	
-		num_instructions = readFile("code.txt", &read);
+		num_instructions = readFile("code2.txt", &read);
 		if(num_instructions==-1)
 			return 0;
 	
@@ -30,11 +33,13 @@ int main(void)
 	
 		instructions = read.array; /* Arreglo con las instrucciones */
 	//---------------------------//	
-
+	for(i=0;i<=255;i++)
+	{
+		memory[i]=255;
+	}
    	
 	//declaraciónn variables locales
-	int ch=0;
-	int j;
+	int ch,j,h;
 	iniciarinterfaz(); // inicio de la interfaz
 	clear();
 	
@@ -72,34 +77,28 @@ int main(void)
 		if(ch=='C') //ciclo infinito hasta que se presione la tecla P, pausar
 		{
 			erase();
-			//uint32_t BitCount(cont);
-			//push (registros,cont);
-			
+			mostrarmemoria(memory);
+			attron(COLOR_PAIR(1)); 
+			mvprintw(23,23,"Q=Otra ventana   S=salir"); //mostrar en pantalla los botones de ayuda
+			attroff(COLOR_PAIR(1)); //finaliza el color 6
 		}
 		if(ch!='C')
 		{
-		
-		refresh();
+		erase ();		
 		mostrarRegistros(registros,13); //mostrar registros
-		refresh();
 		mostrarbanderas(Banderas,4); //mostrar banderas
-		refresh();
 		mvprintw(12,7,"      ");
 		mvprintw(12,4,"PC: %d",registros[15]); //imprimir valor de pc
 		refreshScreen();
 		mvprintw(14,4,"LR: %d",registros[14]); //Imprimir valor de lr
-		refresh();
 		instruction = getInstruction(instructions[registros[15]]); // Instrucción en la posición 0
 		mvprintw(16,4,"->");
 		mvprintw(16,7,instructions[registros[15]]); //imprimir la próxima instrucción
-		refresh();
-		decodeInstruction(instruction,registros,Banderas); // encargada de hacer el llamado a la instrucción y modifica el pc para saber que linea del txt ejecutar
-		refresh();	
+		decodeInstruction(instruction,registros,Banderas,memory); // encargada de hacer el llamado a la instrucción y modifica el pc para saber que linea del txt ejecutar	
 		init_pair(6, COLOR_WHITE, COLOR_BLACK); //definición el par de color 6
 		attron(COLOR_PAIR(6)); //inicia el color 6
 		mvprintw(23,3,"BOTONES DE AYUDA: R=Reiniciar A=Automatico P=Parar C=Cambio modo S=salir"); //mostrar en pantalla los botones de ayuda
 		attroff(COLOR_PAIR(6)); //finaliza el color 6
-		refresh();
 		}	
 	}
 	

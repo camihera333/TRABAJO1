@@ -17,33 +17,55 @@ void iniciarinterfaz ()
     init_pair(2, COLOR_YELLOW, COLOR_BLACK);
 	attroff(COLOR_PAIR(2)); //se finaliza el color
 	attroff(COLOR_PAIR(1)); //se finaliza el color
+	
 }
-
-
-void mostrarmemoria(uint8_t *memory){
+void mostrarmemoria(uint8_t *memory)
+{
 	erase();
-	int size=60; //tamaño 
 	int i; //variable local
 	attron(COLOR_PAIR(1)); //inicio de color
-	mvprintw(3,28,"Memoria Ram");  //mostrar en pantalla meoria ram
+	mvprintw(2,30,"Memoria Ram");  //mostrar en pantalla meoria ram
 	attroff(COLOR_PAIR(1)); //finalización de color
-	attron(COLOR_PAIR(2)); //inicio de color
-	mvprintw(24,71,"P"); //imprimir
-	for(i=0;i<=size;i++){ //ciclo para mostrar la memoria
-		if(i<=20){
-			mvprintw(3+i,0,"%d",memory[i]);
+	for(i=0;i<=63;i++){ //ciclo para mostrar la memoria
+		int b=255-(i*4);
+		
+		if(i<16)
+		{
+			move(4+i,3);
+			attron(COLOR_PAIR(1));
+			printw("%.2X ",b);
+			attroff(COLOR_PAIR(1));
+			printw("%.2X %.2X %.2X %.2X",memory[b],memory[b-1],memory[b-2],memory[b-3]);
 		}
-		if((i>20)&&(i<=40)){
-			mvprintw(3+i-20,25,"%d",memory[i]);
+		if((i>=16)&&(i<32))
+		{
+			move(4+i-16,20);
+			attron(COLOR_PAIR(1));
+			printw("%.2X ", b);
+			attroff(COLOR_PAIR(1));
+			printw("%.2X %.2X %.2X %.2X",memory[b],memory[b-1],memory[b-2],memory[b-3]);
 		}
-		if(i>40){
-			mvprintw(3+i-40,50,"%d",memory[i]);
+		if((i>=32)&&(i<48))
+		{
+			move(4+i-32,38);
+			attron(COLOR_PAIR(1));
+			printw("%.2X ", b);
+			attroff(COLOR_PAIR(1));
+			printw("%.2X %.2X %.2X %.2X",memory[b],memory[b-1],memory[b-2],memory[b-3]);
+		}
+		
+		if(i>=48)
+		{
+			move(4+i-48,56);
+			attron(COLOR_PAIR(1));
+			printw("%.2X ", b);
+			attroff(COLOR_PAIR(1));
+			printw("%.2X %.2X %.2X %.2X",memory[b],memory[b-1],memory[b-2],memory[b-3]);
 		}
 	}
+	
 	attroff(COLOR_PAIR(2));   //imprime en pantalla la memoria que se realiza con los ciclos 
 }
-
-
 void refreshScreen(void)
 {
 	border( ACS_VLINE, ACS_VLINE, ACS_HLINE, ACS_HLINE,	ACS_ULCORNER, ACS_URCORNER,	ACS_LLCORNER, ACS_LRCORNER	);
@@ -67,21 +89,21 @@ void mostrarRegistros(uint32_t *registros, size_t t)
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i); 
 		attron(COLOR_PAIR(2)); // se inicializa el color
-		printw("%X\t\t", registros[i]); //se imprime el resultado
+		printw("%d\t\t", registros[i]); //se imprime el resultado
 	}
 	for(i=(t/4)+2; i<=(t/2)+2; i++)
 	{	move(i, 25);	 //se pone el cursor en la posicion deseda
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i);
 		attron(COLOR_PAIR(2)); // se inicializa el color
-		printw("%X\t\t", registros[i]); //se imprime el resultado
+		printw("%d\t\t", registros[i]); //se imprime el resultado
 	}
 	for(i=(t/2)+3; i<=(t/2)+6; i++)
 	{	move(-4+i, 40);	 //se pone el cursor en la posicion deseda
 		attron(COLOR_PAIR(1)); // se inicializa el color
 		printw("R%-2d:", i);
 		attron(COLOR_PAIR(2)); // se inicializa el color
-		printw("%X\t\t", registros[i]); //se imprime el resultado
+		printw("%d\t\t", registros[i]); //se imprime el resultado
 		attroff(COLOR_PAIR(2)); //se finaliza el color
 		attroff(COLOR_PAIR(1)); //se finaliza el color
 	}

@@ -3,34 +3,27 @@
 #include <stdint.h>
 #include "instrucciones.h"
 #include "funcioninterfaz.h"
-
-
-uint32_t BitCount(uint32_t* register_list) //declaración de función BitCount
+uint32_t BitCount(uint8_t* register_list)//declaración de función BitCount
 {
 	uint32_t cont=0; //declaración variables locales
 	int i;
-      for(i=0;i=14;i++) //ciclo que va hasta el número de registros
+      for(i=0;i<=15;i++) //ciclo que va hasta el número de registros
 	  { 
-		  if((i<=7)||(i==14)) //condicional
-		  {
-			   if(register_list[i]==1)
+		     if(register_list[i]==1)
 			   cont=cont+1; //aumenta el contador 
-		  }
-			 
 	  }
 	  return cont;
 }
-
-void push (uint32_t* registros,uint8_t* register_list)  //declaración de función push
+void push (uint32_t* registros,uint8_t* register_list,uint8_t* memory)  //declaración de función push
 {
-	uint32_t BitCount(uint32_t* register_list); //declaración variables locales
-	uint8_t memory[70];//declaración variables locales
+	uint32_t a;
+	a=BitCount(register_list); //declaración variables locales
 	uint32_t address;//declaración variables locales
 	int i;//declaración variables locales
-	address=registros[13]-4*BitCount(register_list); 
+	address=registros[13]-4*a;
 	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
 	{
-		if(registros[i]==1)
+		if(register_list[i]==1)
 		{
 			
 			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
@@ -38,13 +31,28 @@ void push (uint32_t* registros,uint8_t* register_list)  //declaración de funci�
 			memory[address+2]=(uint8_t)(registros[i]>>16);
 			memory[address+3]=(uint8_t)(registros[i]>>24);
 			address=address+4;
-			}
 		}
-	registros[13]=registros[13]-4*BitCount(register_list);
-	mostrar_memoria(memory); //muestra memoria
+	}
+	registros[13]=registros[13]-4*a;
 }
-
-
+	
+void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory)
+{
+	uint32_t a;
+	a=BitCount(register_list);
+	uint32_t address;
+	int i;
+	address=registros[13];
+	for(i=0;i<=15;i++)
+	{
+		if(register_list[i]==1)
+		{
+			registros[i]=((uint32_t)memory[address+3]<<24)|((uint32_t)memory[address+2]<<16)|((uint32_t)memory[address+1]<<8)|((uint32_t)memory[address]);
+			address=address+4;
+		}
+	}
+		registros[13]=registros[13]+4*a;
+}
  void ADD (uint32_t* rd, uint32_t a, uint32_t b) //suma 
 {
     *rd=a+b; //En la variable rd  se guarda el resultado de la suma de los valores a y b
@@ -147,7 +155,37 @@ void CMN (uint32_t a, uint32_t b, uint32_t* Banderas) // suma pero no guarda el 
 {	
 	uint32_t i; //variables locales
 	i=a+b; //guarda en la variable local i, el valor de la suma entre a y b
-	funcBanderas(&i,a,b,Banderas); //llama a la funcion funcBanderas, para modificar las banderas más no guarda el resultado
+	
+	uint32_t c,v,ha,hb,hr;
+	ha=a&(1<<31); //para sacar el bit más significativo
+	hb=b&(1<<31); //para sacar el bit más significativo
+	hr=i&(1<<31); //para sacar el bit más significativo
+	
+    if(i>=(1<<31))
+
+        *(Banderas+0)=1;//si el resultado es negativa se almacena en el arreglo banderas en la posición 0 un 1 para usarlo en la parte gráfica
+    else
+        *(Banderas+0)=0;//si el resultado no es negativa se almacena en el arreglo banderas en la posición 0 un 0 para usarlo en la parte gráfica
+
+    if(i==0)
+
+        *(Banderas+1)=1;//si el resultado es cero se almacena en el arreglo banderas en la posición 1 un 1 para usarlo en la parte gráfica
+    else
+        *(Banderas+1)=0;//si el resultado no es cero se almacena en el arreglo banderas en la posición 1 un 0 para usarlo en la parte gráfica
+
+   
+	c=(ha&&hb)||((!ha)&&(hb)&&(!hr))||(ha&&(!hb)&&(!hr)); //Fórmula para hallar el carry en este caso
+
+    if(c)
+    *(Banderas+2)=1;//si el resultado tiene carry se almacena en el arreglo banderas en la posición 2 un 1 para usarlo en la parte gráfica
+    else
+        *(Banderas+2)=0;//si el resultado no tiene carry se almacena en el arreglo banderas en la posición 2 un 0 para usarlo en la parte gráfica
+
+	v=(ha&&hb&&(!hr))||((!ha)&&(!hb)&&hr); //Fórmula para hallar el sobreflujo en este caso
+    if(v)
+     *(Banderas+3)=1;//si el resultado  tiene sobreflujo se almacena en el arreglo banderas en la posición 3 un 1 para usarlo en la parte gráfica
+    else
+        *(Banderas+3)=0;//si el resultado no tiene sobreflujo se almacena en el arreglo banderas en la posición 3 un 0 para usarlo en la parte gráfica
 }
 
 
