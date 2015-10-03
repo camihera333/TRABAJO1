@@ -18,6 +18,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 	pop(registros,instruction.registers_list,memory);
 	registros[15]++;
 	}
+	
+		
 	//Función ADD
 	if(( strcmp(instruction.mnemonic,"ADDS") == 0 )||(strcmp(instruction.mnemonic,"ADD") == 0)){ //comparando caracteres con los del archivo txt
 		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
@@ -509,7 +511,7 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 	if( strcmp(instruction.mnemonic,"B") == 0 ){ //comparando caracteres con los del archivo txt
 			registros[15]+=instruction.op1_value; //guarda en pc el valor del operando 1
 	}
-
+	
 	//BL
 	if( strcmp(instruction.mnemonic,"BL") == 0 ){ //comparando caracteres con los del archivo txt
 
@@ -517,6 +519,7 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			registros[15]+=instruction.op1_value; //guarda en pc el valor del operando 1+a
 			registros[14]=a+1; //guarda en LR el valor de a +1
 	}
+	
 
 	//BLX
 	if( strcmp(instruction.mnemonic,"BLX") == 0 ){ //comparando caracteres con los del archivo txt
@@ -525,12 +528,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			registros[15]=a-1; //guarda en pc el valor del operando a-1
 			registros[14]=instruction.op1_value; //guarda en lr el valor del operando 1
 	}
+	
 
 	//BX
 	if( strcmp(instruction.mnemonic,"BX") == 0 ){ //comparando caracteres con los del archivo txt
 
 			registros[15]=registros[14]; //guarda en pc el valor de lr
 	}
+			
 
 	//BEQ
 	if( strcmp(instruction.mnemonic,"BEQ") == 0 ){//comparando caracteres con los del archivo txt
@@ -538,7 +543,11 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else 
+				registros[15]++;
 	}
+	
+
 
 	//BNE
 	if( strcmp(instruction.mnemonic,"BNE") == 0 ){//comparando caracteres con los del archivo txt
@@ -546,6 +555,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BCS
@@ -554,6 +565,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BCC
@@ -562,6 +575,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BMI
@@ -570,6 +585,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BPL
@@ -578,6 +595,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BVS
@@ -586,6 +605,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BVC
@@ -594,6 +615,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BHI
@@ -602,6 +625,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BLS
@@ -610,6 +635,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BGE
@@ -618,6 +645,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BLT
@@ -626,6 +655,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BGT
@@ -634,6 +665,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BLE
@@ -642,6 +675,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 			}
+				else
+				registros[15]++;
 	}
 
 	//BAL
@@ -649,7 +684,17 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]=a+instruction.op1_value; //guarda en pc el valor de a + operando 1
 	}
+	
+	if( strcmp(instruction.mnemonic,"LDR") == 0 ){//comparando caracteres con los del archivo txt
+		if(instruction.op2_type=='#') //si el operando 2 es un número
+			REV(&registros[instruction.op1_value],instruction.op2_value);//se invoca la función
+		else {
+		REV(&registros[instruction.op1_value],registros[instruction.op2_value]);//se invoca la función
+		}
+		registros[15]++;//incrementa registros[15], es decir pc, en uno
+	}
 }
+
 
 
 instruction_t getInstruction(char* instStr)

@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "instrucciones.h"
 #include "funcioninterfaz.h"
+
 uint32_t BitCount(uint8_t* register_list)//declaración de función BitCount
 {
 	uint32_t cont=0; //declaración variables locales
@@ -30,7 +31,7 @@ void push (uint32_t* registros,uint8_t* register_list,uint8_t* memory)  //declar
 			memory[address+1]=(uint8_t)(registros[i]>>8);
 			memory[address+2]=(uint8_t)(registros[i]>>16);
 			memory[address+3]=(uint8_t)(registros[i]>>24);
-			address=address+4;
+			address=address+4; //Actualiza adress
 		}
 	}
 	registros[13]=registros[13]-4*a;
@@ -53,6 +54,129 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory)
 	}
 		registros[13]=registros[13]+4*a;
 }
+
+ void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros) 
+{
+    uint32_t var=0;
+	uint32_t c;
+	uint32_t address;//declaración variables locales
+	int i;//declaración variables locales
+	c=BitCount(register_list); //declaración variables locales
+	var=(b<<2);
+	address=(a+b)-4*c;
+	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
+	{
+		if(register_list[i]==1)
+		{		
+			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
+			memory[address+1]=(uint8_t)(registros[i]>>8);
+			memory[address+2]=(uint8_t)(registros[i]>>16);
+			memory[address+3]=(uint8_t)(registros[i]>>24);
+			address=address+4; //Actualiza adress
+		}
+	}
+	registros[13]=registros[13]-4*c;
+}
+
+
+ void LDRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros) 
+{
+    uint32_t var=0;
+	uint32_t c;
+	uint32_t address;//declaración variables locales
+	int i;//declaración variables locales
+	c=BitCount(register_list); //declaración variables locales
+	var=(b<<2);
+	address=(a+b)-4*c;
+	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
+	{
+		if(register_list[i]==1)
+		{		
+			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
+			memory[address+1]=(uint8_t)(registros[i]>>8);
+			memory[address+2]=(uint8_t)(registros[i]>>16);
+			memory[address+3]=(uint8_t)(registros[i]>>24);
+			address=address+4; //Actualiza adress
+		}
+	}
+	registros[13]=registros[13]-4*c;
+}
+
+ void LDRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros) 
+{
+    uint32_t var=0;
+	uint32_t c;
+	uint32_t address;//declaración variables locales
+	int i;//declaración variables locales
+	c=BitCount(register_list); //declaración variables locales
+	var=(b<<2);
+	address=(a+b)-4*c;
+	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
+	{
+		if(register_list[i]==1)
+		{		
+			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
+			memory[address+1]=(uint8_t)(registros[i]>>8);
+			memory[address+2]=(uint8_t)(registros[i]>>16);
+			memory[address+3]=(uint8_t)(registros[i]>>24);
+			address=address+4; //Actualiza adress
+		}
+	}
+	registros[13]=registros[13]-4*c;
+}
+
+ void LDRSB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros) 
+{
+    uint32_t var=0;
+	uint32_t c;
+	uint32_t address;//declaración variables locales
+	int i;//declaración variables locales
+	c=BitCount(register_list); //declaración variables locales
+	var=(b<<2);
+	address=(a+b)-4*c;
+	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
+	{
+		if(register_list[i]==1)
+		{		
+			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
+			memory[address+1]=(uint8_t)(registros[i]>>8);
+			memory[address+2]=(uint8_t)(registros[i]>>16);
+			memory[address+3]=(uint8_t)(registros[i]>>24);
+			address=address+4; //Actualiza adress
+		}
+	}
+	registros[13]=registros[13]-4*c;
+}
+
+ void LDRSH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros) 
+{
+    uint32_t var=0;
+	uint32_t c;
+	uint32_t address;//declaración variables locales
+	int i;//declaración variables locales
+	c=BitCount(register_list); //declaración variables locales
+	var=(b<<2);
+	address=(a+b)-4*c;
+	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
+	{
+		if(register_list[i]==1)
+		{		
+			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
+			memory[address+1]=(uint8_t)(registros[i]>>8);
+			memory[address+2]=(uint8_t)(registros[i]>>16);
+			memory[address+3]=(uint8_t)(registros[i]>>24);
+			address=address+4; //Actualiza adress
+		}
+	}
+	registros[13]=registros[13]-4*c;
+}
+
+
+
+
+
+
+
  void ADD (uint32_t* rd, uint32_t a, uint32_t b) //suma 
 {
     *rd=a+b; //En la variable rd  se guarda el resultado de la suma de los valores a y b

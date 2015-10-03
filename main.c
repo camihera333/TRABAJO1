@@ -12,7 +12,6 @@ int main(void)
 {	
 	//declaracion de variables locales
 	uint32_t Banderas[4]={0};
-	uint32_t cont=0;
     uint32_t registros[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,256,0,0};
 	uint8_t memory[256];//declaración variables locales
 
@@ -39,7 +38,7 @@ int main(void)
 	}
    	
 	//declaraciónn variables locales
-	int ch,j,h;
+	int ch=0,j;
 	iniciarinterfaz(); // inicio de la interfaz
 	clear();
 	

@@ -11,6 +11,8 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory);
 */
 void push(uint32_t* registros,uint8_t* register_list,uint8_t* memory);
 
+void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+
 /**
 * \brief Function BitCount
 * \param uint32_t* registros puntero a la primera direccion del arreglo
