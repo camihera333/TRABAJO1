@@ -2,29 +2,98 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <curses.h>
+
+/**
+* \brief Function BitCount
+* \param uint8_t* register_list puntero a la primera direccion del arreglo
+* \return cont
+*/
+uint32_t BitCount(uint8_t* register_list);
+
+/**
+* \brief Function pop
+* \param uint32_t* registros puntero a la primera direccion del arreglo
+* \param uint8_t register_list puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \return 0
+*/
 void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory);
+
 /**
 * \brief Function push
 * \param uint32_t* registros puntero a la primera direccion del arreglo
-* \param uint32_t register_list primera registro que se va utilizar
+* \param uint8_t register_list puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
 * \return 0
 */
 void push(uint32_t* registros,uint8_t* register_list,uint8_t* memory);
 
+/**
+* \brief Function LDR
+* \param uint32_t* rd puntero a la primera direccion del arreglo
+* \param uint32_t a primera registro que se va utilizar
+* \param uint32_t b segundo registro que se va utilizar
+* \param uint8_t register_list puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \param uint32_t* registros puntero a la primera direccion del arreglo
+* \return 0
+*/
 void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
 
 /**
-* \brief Function BitCount
+* \brief Function LDRB
+* \param uint32_t* rd puntero a la primera direccion del arreglo
+* \param uint32_t a primera registro que se va utilizar
+* \param uint32_t b segundo registro que se va utilizar
+* \param uint8_t register_list puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
 * \param uint32_t* registros puntero a la primera direccion del arreglo
-* \return uint32_t 
+* \return 0
 */
-uint32_t BitCount(uint8_t* register_list);
+void LDRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+
+/**
+* \brief Function LDRH
+* \param uint32_t* rd puntero a la primera direccion del arreglo
+* \param uint32_t a primera registro que se va utilizar
+* \param uint32_t b segundo registro que se va utilizar
+* \param uint8_t register_list puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \param uint32_t* registros puntero a la primera direccion del arreglo
+* \return 0
+*/
+void LDRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+
+/**
+* \brief Function LDRSB
+* \param uint32_t* rd puntero a la primera direccion del arreglo
+* \param uint32_t a primera registro que se va utilizar
+* \param uint32_t b segundo registro que se va utilizar
+* \param uint8_t register_list puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \param uint32_t* registros puntero a la primera direccion del arreglo
+* \return 0
+*/
+void LDRSB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+
+/**
+* \brief Function LDRSH
+* \param uint32_t* rd puntero a la primera direccion del arreglo
+* \param uint32_t a primera registro que se va utilizar
+* \param uint32_t b segundo registro que se va utilizar
+* \param uint8_t register_list puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \param uint32_t* registros puntero a la primera direccion del arreglo
+* \return 0
+*/
+void LDRSH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
 
 /**
 * \brief Function ADD
 * \param uint32_t* rd puntero a la primera direccion del arreglo
 * \param uint32_t a primera registro que se va utilizar
 * \param uint32_t b segundo registro que se va utilizar
+
 * \return 0
 */
 void ADD (uint32_t* rd, uint32_t a, uint32_t b);
