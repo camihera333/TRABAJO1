@@ -2,15 +2,59 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <curses.h>
+
+
+/**
+* \brief Function memout
+* \param uint32_t address variable que hace referencia a la memoria
+* \param uint32_t num numero que determina cuantos bits se toman en la memoria 
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \return uint32_t aux2 
+*/
+uint32_t memout (uint32_t address, uint32_t num, uint8_t* memory);
+
+/**
+* \brief Function memint
+* \param uint32_t address variable que hace referencia a la memoria
+* \param uint32_t num numero que determina cuantos bits se guardan en la memoria 
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \param uint32_t num numero que determina cuantos bits se guardan en la memoria
+* \return 0
+*/
+void memint (uint32_t address, uint32_t num, uint8_t* memory, uint32_t num2);
+
+/**
+* \brief Function nvic
+* \param uint32_t* registros puntero a la primera direccion del arreglo
+* \param uint32_t Banderas puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \param uint32_t interrupciones puntero a la primera direccion del arreglo
+* \return 0
+*/
 void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint32_t* interrupciones);
 
+/**
+* \brief Function ppush
+* \param uint32_t* registros puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \param uint32_t Banderas puntero a la primera direccion del arreglo
+* \return 0
+*/
 void ppush (uint32_t* registros,uint8_t* memory,uint32_t* Banderas) ;
 
+/**
+* \brief Function popp
+* \param uint32_t* registros puntero a la primera direccion del arreglo
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \param uint32_t Banderas puntero a la primera direccion del arreglo
+* \return 0
+*/
 void popp(uint32_t* registros,uint8_t* memory,uint32_t* Banderas);
+
 /**
 * \brief Function BitCount
 * \param uint8_t* register_list puntero a la primera direccion del arreglo
-* \return cont
+* \return uint32_t cont
 */
 uint32_t BitCount(uint8_t* register_list);
 
@@ -37,60 +81,80 @@ void push(uint32_t* registros,uint8_t* register_list,uint8_t* memory);
 * \param uint32_t* rd puntero a la primera direccion del arreglo
 * \param uint32_t a primera registro que se va utilizar
 * \param uint32_t b segundo registro que se va utilizar
-* \param uint8_t register_list puntero a la primera direccion del arreglo
 * \param uint8_t memory puntero a la primera direccion del arreglo
-* \param uint32_t* registros puntero a la primera direccion del arreglo
 * \return 0
 */
-void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory) ;
 
 /**
 * \brief Function LDRB
 * \param uint32_t* rd puntero a la primera direccion del arreglo
 * \param uint32_t a primera registro que se va utilizar
 * \param uint32_t b segundo registro que se va utilizar
-* \param uint8_t register_list puntero a la primera direccion del arreglo
 * \param uint8_t memory puntero a la primera direccion del arreglo
-* \param uint32_t* registros puntero a la primera direccion del arreglo
 * \return 0
 */
-void LDRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+void LDRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory) ;
 
 /**
 * \brief Function LDRH
 * \param uint32_t* rd puntero a la primera direccion del arreglo
 * \param uint32_t a primera registro que se va utilizar
 * \param uint32_t b segundo registro que se va utilizar
-* \param uint8_t register_list puntero a la primera direccion del arreglo
 * \param uint8_t memory puntero a la primera direccion del arreglo
-* \param uint32_t* registros puntero a la primera direccion del arreglo
 * \return 0
 */
-void LDRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+void LDRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory) ;
 
 /**
 * \brief Function LDRSB
 * \param uint32_t* rd puntero a la primera direccion del arreglo
 * \param uint32_t a primera registro que se va utilizar
 * \param uint32_t b segundo registro que se va utilizar
-* \param uint8_t register_list puntero a la primera direccion del arreglo
 * \param uint8_t memory puntero a la primera direccion del arreglo
-* \param uint32_t* registros puntero a la primera direccion del arreglo
 * \return 0
 */
-void LDRSB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+void LDRSB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory) ;
 
 /**
 * \brief Function LDRSH
 * \param uint32_t* rd puntero a la primera direccion del arreglo
 * \param uint32_t a primera registro que se va utilizar
 * \param uint32_t b segundo registro que se va utilizar
-* \param uint8_t register_list puntero a la primera direccion del arreglo
 * \param uint8_t memory puntero a la primera direccion del arreglo
-* \param uint32_t* registros puntero a la primera direccion del arreglo
 * \return 0
 */
-void LDRSH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros);
+void LDRSH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory) ;
+
+/**
+* \brief Function STR
+* \param uint32_t* rd puntero a la primera direccion del arreglo
+* \param uint32_t a primera registro que se va utilizar
+* \param uint32_t b segundo registro que se va utilizar
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \return 0
+*/
+void STR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory) ;
+
+/**
+* \brief Function STRB
+* \param uint32_t* rd puntero a la primera direccion del arreglo
+* \param uint32_t a primera registro que se va utilizar
+* \param uint32_t b segundo registro que se va utilizar
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \return 0
+*/
+void STRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory) ;
+
+/**
+* \brief Function STRH
+* \param uint32_t* rd puntero a la primera direccion del arreglo
+* \param uint32_t a primera registro que se va utilizar
+* \param uint32_t b segundo registro que se va utilizar
+* \param uint8_t memory puntero a la primera direccion del arreglo
+* \return 0
+*/
+void STRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory) ;
 
 /**
 * \brief Function ADD

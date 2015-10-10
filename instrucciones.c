@@ -3,6 +3,76 @@
 #include <stdint.h>
 #include "instrucciones.h"
 #include "funcioninterfaz.h"
+
+uint32_t memout (uint32_t address, uint32_t num, uint8_t* memory) //función que saca los valores de la memoria
+{
+	//declaración de variables locales
+	uint32_t aux2=0;
+	uint8_t aux[num];
+	int i;
+	for (i=0;i<num;i++) //ciclo que determina como se van a guardar los valores 
+	{
+		aux[i]=memory[address-i]; //los valores se van a tomar en forma ascendente
+	}
+	
+	for (i=0;i<num;i++) // ciclo con el cual se guardan los valores en la memoria
+	{	
+		aux2=aux2<<8; //corrimiento del valor aux2
+		aux2=aux2|aux[i]; //rellenado de los valores en la memoria
+	}
+	return aux2; //retorna el valor rellenado en la memoria
+}
+
+void memint (uint32_t address, uint32_t num, uint8_t* memory, uint32_t num2)
+{
+	int i; //variable local
+	uint32_t mas1=0,mas2=0,mas3=0,mas4=0,h1,h2,h3,h4; //variables locales
+	for (i=0; i<32;i++) // ciclo para recorrer cada bit
+	{
+		if ((i>=0)&&(i<8)) //condición para sólo operar con los bits del 0 al 7
+		mas1=(1<<i)|mas1; //en mas1 guarda los  bits del 0 al 7
+	
+		if ((i>=8)&&(i<16))//condición para sólo operar con los bits del 8 al 15
+		mas2=(1<<i)|mas2; //en mas2 guarda los  bits del 8 al 15
+	
+		if ((i>=16)&&(i<24))//condición para sólo operar con los bits del 16 al 23
+		mas3=(1<<i)|mas3; //en mas3 guarda los  bits del 16 al 23
+	
+		if ((i>=24)&&(i<32))//condición para sólo operar con los bits del 24 al 31
+		mas4=(1<<i)|mas4; //en mas4 guarda los  bits del 24 al 31
+	}
+	h1=mas1&num2;//en h1 guarda los  bits del 0 al 7
+	h2=mas2&num2;//en h2 guarda los  bits del 8 al 15
+	h3=mas3&num2;//en h3 guarda los  bits del 16 al 23
+	h4=mas4&num2;//en h4 guarda los  bits del 24 al 31
+	
+	if(num==1)
+	{
+		memory[address]=h1;
+	}
+	
+	if(num==2)
+	{
+		memory[address]=h2;
+		memory[address-1]=h1;
+	}
+	
+	if(num==3)
+	{
+		memory[address]=h3;
+		memory[address-1]=h2;
+		memory[address-2]=h1;		
+	}
+	
+	if(num==4)
+	{
+		memory[address]=h4;
+		memory[address-1]=h3;
+		memory[address-2]=h2;
+		memory[address-3]=h1;		
+	}
+}
+
 void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint32_t* interrupciones) 
 {
 	int i;
@@ -139,120 +209,92 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
 		registros[13]=registros[13]+4*a; //Actualiza el registro en la posición 13
 }
 
- void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros)  //declaración de función LDR
+ void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDR
 {
-    uint32_t var=0; //declaración variables locales
-	uint32_t c;//declaración variables locales
-	uint32_t address;//declaración variables locales
-	int i;//declaración variables locales
-	c=BitCount(register_list); //declaración variables locales
-	var=(b<<2); //agregar dos ceros a la derecha y pasarlo a un numero de 32 bits
-	address=(a+b)-4*c; //Se actualiza address
-	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
-	{
-		if(register_list[i]==1)
-		{		
-			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
-			memory[address+1]=(uint8_t)(registros[i]>>8); // Se guarda el valor en el arreglo memory
-			memory[address+2]=(uint8_t)(registros[i]>>16); // Se guarda el valor en el arreglo memory
-			memory[address+3]=(uint8_t)(registros[i]>>24); // Se guarda el valor en el arreglo memory
-			address=address+4; //Actualiza adress
-		}
-	}
-	registros[13]=registros[13]-4*c; //Actualiza el registro en la posición 13
+	uint32_t address=0;
+	uint32_t aux=0;
+	aux=b;
+	aux=aux<<2;
+	address=a+aux;
+	*rd=memout(address,4,memory);          
 }
 
-void LDRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros)  //declaración de función LDRB
+ void LDRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRB
 {
-    uint32_t var=0; //declaración variables locales
-	uint32_t c;//declaración variables locales
-	uint32_t address;//declaración variables locales
-	int i;//declaración variables locales
-	c=BitCount(register_list); //declaración variables locales
-	var=(b<<2); //agregar dos ceros a la derecha y pasarlo a un numero de 32 bits
-	address=(a+b)-4*c; //Se actualiza address
-	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
-	{
-		if(register_list[i]==1)
-		{		
-			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
-			memory[address+1]=(uint8_t)(registros[i]>>8); // Se guarda el valor en el arreglo memory
-			memory[address+2]=(uint8_t)(registros[i]>>16); // Se guarda el valor en el arreglo memory
-			memory[address+3]=(uint8_t)(registros[i]>>24); // Se guarda el valor en el arreglo memory
-			address=address+4; //Actualiza adress
-		}
-	}
-	registros[13]=registros[13]-4*c; //Actualiza el registro en la posición 13
+	uint32_t address=0;
+	uint32_t aux=0;
+	aux=b;
+	address=a+aux;
+	*rd=memout(address,1,memory);  
+   
 }
 
-void LDRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros)  //declaración de función LDR
+ void LDRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRH
 {
-    uint32_t var=0; //declaración variables locales
-	uint32_t c;//declaración variables locales
-	uint32_t address;//declaración variables locales
-	int i;//declaración variables locales
-	c=BitCount(register_list); //declaración variables locales
-	var=(b<<2); //agregar dos ceros a la derecha y pasarlo a un numero de 32 bits
-	address=(a+b)-4*c; //Se actualiza address
-	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
-	{
-		if(register_list[i]==1)
-		{		
-			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
-			memory[address+1]=(uint8_t)(registros[i]>>8); // Se guarda el valor en el arreglo memory
-			memory[address+2]=(uint8_t)(registros[i]>>16); // Se guarda el valor en el arreglo memory
-			memory[address+3]=(uint8_t)(registros[i]>>24); // Se guarda el valor en el arreglo memory
-			address=address+4; //Actualiza adress
-		}
-	}
-	registros[13]=registros[13]-4*c; //Actualiza el registro en la posición 13
+    uint32_t address=0;
+	uint32_t aux=0;
+	aux=b;
+	aux=aux<<1;
+	address=a+aux;
+	*rd=memout(address,2,memory);
 }
 
-void LDRSB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros)  //declaración de función LDRSB
+ void LDRSB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRSB
 {
-    uint32_t var=0; //declaración variables locales
-	uint32_t c;//declaración variables locales
-	uint32_t address;//declaración variables locales
-	int i;//declaración variables locales
-	c=BitCount(register_list); //declaración variables locales
-	var=(b<<2); //agregar dos ceros a la derecha y pasarlo a un numero de 32 bits
-	address=(a+b)-4*c; //Se actualiza address
-	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
-	{
-		if(register_list[i]==1)
-		{		
-			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
-			memory[address+1]=(uint8_t)(registros[i]>>8); // Se guarda el valor en el arreglo memory
-			memory[address+2]=(uint8_t)(registros[i]>>16); // Se guarda el valor en el arreglo memory
-			memory[address+3]=(uint8_t)(registros[i]>>24); // Se guarda el valor en el arreglo memory
-			address=address+4; //Actualiza adress
-		}
-	}
-	registros[13]=registros[13]-4*c; //Actualiza el registro en la posición 13
+	uint8_t z=0;
+    uint32_t address=0;
+	uint32_t aux=0;
+	aux=b;
+	address=a+aux;
+	z=memout(address,1,memory);
+	if(z>=128) //condicion para saber si el valor de a es negativo
+		*rd=(memout(address,1,memory))|(4294967040); //guarde en rd el valor desplazado 8 veces a la derecha y haga un or con mas2
+	else
+	*rd=memout(address,1,memory);   
 }
 
-void LDRSH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* register_list,uint8_t* memory,uint32_t* registros)  //declaración de función LDRSH
+ void LDRSH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRSH
 {
-    uint32_t var=0; //declaración variables locales
-	uint32_t c;//declaración variables locales
-	uint32_t address;//declaración variables locales
-	int i;//declaración variables locales
-	c=BitCount(register_list); //declaración variables locales
-	var=(b<<2); //agregar dos ceros a la derecha y pasarlo a un numero de 32 bits
-	address=(a+b)-4*c; //Se actualiza address
-	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
-	{
-		if(register_list[i]==1)
-		{		
-			memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
-			memory[address+1]=(uint8_t)(registros[i]>>8); // Se guarda el valor en el arreglo memory
-			memory[address+2]=(uint8_t)(registros[i]>>16); // Se guarda el valor en el arreglo memory
-			memory[address+3]=(uint8_t)(registros[i]>>24); // Se guarda el valor en el arreglo memory
-			address=address+4; //Actualiza adress
-		}
-	}
-	registros[13]=registros[13]-4*c; //Actualiza el registro en la posición 13
+	uint8_t z=0;
+    uint32_t address=0;
+	uint32_t aux=0;
+	aux=b;
+	address=a+aux;
+	z=memout(address,2,memory);
+	if(z>=32768) //condicion para saber si el valor de a es negativo
+		*rd=(memout(address,2,memory))|(4294901760); //guarde en rd el valor desplazado 8 veces a la derecha y haga un or con mas2
+	else
+	*rd=memout(address,2,memory);  
 }
+
+ void STR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función STR
+ {
+	uint32_t address=0;
+	uint32_t aux=0;
+	aux=b;
+	aux=aux<<2;
+	address=a+aux;
+	memint(address,4,memory,*rd);
+}
+ 
+ void STRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función STRB
+ {
+	uint32_t address=0;
+	uint32_t aux=0;
+	aux=b;
+	address=a+aux;
+	memint(address,1,memory,*rd);
+ }
+ 
+ void STRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función STRH
+ {
+	uint32_t address=0;
+	uint32_t aux=0;
+	aux=b;
+	aux=aux<<1;
+	address=a+aux;
+	memint(address,2,memory,*rd);
+ }
 
 
  void ADD (uint32_t* rd, uint32_t a, uint32_t b) //suma 

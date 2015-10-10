@@ -6,12 +6,159 @@
 void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t* Banderas, uint8_t* memory)
 {
 	uint32_t a;
-	//LDR
-	if  ((strcmp(instruction.mnemonic,"LDR") == 0))
-	{
+	
+	//Función LDR
+	if( strcmp(instruction.mnemonic,"LDR") == 0 ){ //comparando caracteres con los del archivo txt
+		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
+			if(instruction.op2_type=='#'){ //si el operando 2 es un número
+				MOV(&registros[instruction.op1_value],instruction.op2_value); //se invoca la función				
+			}
+				if(instruction.op2_type=='R'){//si el operando 2 es un registro
+				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
+				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				}
+		}
 		
-		registros[15]++;
+		else {
+			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
+			LDR(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			}
+				else{
+				LDR(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+				}
+		}
+		return;
 	}
+	
+	//Función LDRB
+	if( strcmp(instruction.mnemonic,"LDRB") == 0 ){ //comparando caracteres con los del archivo txt
+		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
+			if(instruction.op2_type=='#'){ //si el operando 2 es un número
+				MOV(&registros[instruction.op1_value],instruction.op2_value); //se invoca la función				
+			}
+				if(instruction.op2_type=='R'){//si el operando 2 es un registro
+				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
+				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				}
+		}
+		
+		else {
+			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
+			LDRB(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			}
+				else{
+				LDRB(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+				}
+		}
+		return;
+	}
+	
+	//Función LDRH
+	if( strcmp(instruction.mnemonic,"LDRH") == 0 ){ //comparando caracteres con los del archivo txt
+		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
+			if(instruction.op2_type=='#'){ //si el operando 2 es un número
+				MOV(&registros[instruction.op1_value],instruction.op2_value); //se invoca la función				
+			}
+				if(instruction.op2_type=='R'){//si el operando 2 es un registro
+				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
+				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				}
+		}
+		
+		else {
+			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
+			LDRH(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			}
+				else{
+				LDRH(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+				}
+		}
+		return;
+	}
+	
+	//Función LDRSB
+	if( strcmp(instruction.mnemonic,"LDRSB") == 0 ){ //comparando caracteres con los del archivo txt
+	
+		LDR(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+		return;
+	}
+	
+	//Función LDRSH
+	if( strcmp(instruction.mnemonic,"LDRSH") == 0 ){ //comparando caracteres con los del archivo txt
+	
+		LDR(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+		return;
+	}
+	
+	//Función STR
+	if( strcmp(instruction.mnemonic,"STR") == 0 ){ //comparando caracteres con los del archivo txt
+		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
+			if(instruction.op2_type=='#'){ //si el operando 2 es un número
+				MOV(&registros[instruction.op1_value],instruction.op2_value); //se invoca la función				
+			}
+				if(instruction.op2_type=='R'){//si el operando 2 es un registro
+				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
+				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				}
+		}
+		
+		else {
+			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
+			STR(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			}
+				else{
+				STR(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+				}
+		}
+		return;
+	}
+	
+	//Función STRB
+	if( strcmp(instruction.mnemonic,"STRB") == 0 ){ //comparando caracteres con los del archivo txt
+		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
+			if(instruction.op2_type=='#'){ //si el operando 2 es un número
+				MOV(&registros[instruction.op1_value],instruction.op2_value); //se invoca la función				
+			}
+				if(instruction.op2_type=='R'){//si el operando 2 es un registro
+				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
+				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				}
+		}
+		
+		else {
+			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
+			STRB(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			}
+				else{
+				STRB(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+				}
+		}
+		return;
+	}
+	
+	//Función STRH
+	if( strcmp(instruction.mnemonic,"STRH") == 0 ){ //comparando caracteres con los del archivo txt
+		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
+			if(instruction.op2_type=='#'){ //si el operando 2 es un número
+				MOV(&registros[instruction.op1_value],instruction.op2_value); //se invoca la función				
+			}
+				if(instruction.op2_type=='R'){//si el operando 2 es un registro
+				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
+				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				}
+		}
+		
+		else {
+			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
+			STRH(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			}
+				else{
+				STRH(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+				}
+		}
+		return;
+	}
+	
 	// PUSH
 	if(( strcmp(instruction.mnemonic,"push") == 0 ))
 	{		

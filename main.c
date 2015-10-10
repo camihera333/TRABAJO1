@@ -14,6 +14,7 @@ int main(void)
 	uint32_t Banderas[4]={0};
     uint32_t registros[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,256,0,0};
 	uint8_t memory[256];//declaración variables locales
+	uint8_t mem_pro = 0;
 
 
 
@@ -76,32 +77,50 @@ int main(void)
 		if(ch=='C') //ciclo infinito hasta que se presione la tecla P, pausar
 		{
 			erase();
-			mostrarmemoria(memory);
-			attron(COLOR_PAIR(1));
-			mvprintw(23,23,"Q=Otra ventana   S=salir"); //mostrar en pantalla los botones de ayuda
-			attroff(COLOR_PAIR(1)); //finaliza el color 6
+			if(mem_pro==0){
+				mostrarmemoria(memory);
+				attron(COLOR_PAIR(1)); 
+				mvprintw(23,23,"Q=Otra ventana   S=salir"); //mostrar en pantalla los botones de ayuda
+				attroff(COLOR_PAIR(1)); //finaliza el color 6
+				mem_pro=1;
+			}else{
+				mostrarRegistros(registros,13); //mostrar registros
+				mostrarbanderas(Banderas,4); //mostrar banderas
+				mvprintw(12,7,"      ");
+				mvprintw(12,4,"PC: %d",registros[15]); //imprimir valor de pc
+				refreshScreen();
+				mvprintw(14,4,"LR: %d",registros[14]); //Imprimir valor de lr
+				instruction = getInstruction(instructions[registros[15]]); // Instrucción en la posición 0
+				mvprintw(16,4,"->");
+				mvprintw(16,7,instructions[registros[15]]); //imprimir la próxima instrucción
+				init_pair(6, COLOR_WHITE, COLOR_BLACK); //definición el par de color 6
+				attron(COLOR_PAIR(6)); //inicia el color 6
+				mvprintw(23,3,"BOTONES DE AYUDA: R=Reiniciar A=Automatico P=Parar C=Cambio modo S=salir"); //mostrar en pantalla los botones de ayuda
+				attroff(COLOR_PAIR(6)); //finaliza el color 6
+				mem_pro=0;
+			}
+			
 		}
-		if(ch!='C')
+		if(ch=='I')
 		{
-			erase ();
+			erase ();		
 			mostrarRegistros(registros,13); //mostrar registros
 			mostrarbanderas(Banderas,4); //mostrar banderas
 			mvprintw(12,7,"      ");
 			mvprintw(12,4,"PC: %d",registros[15]); //imprimir valor de pc
 			refreshScreen();
 			mvprintw(14,4,"LR: %d",registros[14]); //Imprimir valor de lr
-
-			//nvic(registros,Banderas,memory,interrupciones);
-
 			instruction = getInstruction(instructions[registros[15]]); // Instrucción en la posición 0
 			mvprintw(16,4,"->");
 			mvprintw(16,7,instructions[registros[15]]); //imprimir la próxima instrucción
-			decodeInstruction(instruction,registros,Banderas,memory); // encargada de hacer el llamado a la instrucción y modifica el pc para saber que linea del txt ejecutar
+			decodeInstruction(instruction,registros,Banderas,memory); // encargada de hacer el llamado a la instrucción y modifica el pc para saber que linea del txt ejecutar	
 			init_pair(6, COLOR_WHITE, COLOR_BLACK); //definición el par de color 6
 			attron(COLOR_PAIR(6)); //inicia el color 6
-			mvprintw(23,2,"BOTONES DE AYUDA: R=Reiniciar A=Automatico P=Parar C=Cambio S=salir"); //mostrar en pantalla los botones de ayuda
+			mvprintw(23,3,"BOTONES DE AYUDA: R=Reiniciar A=Automatico P=Parar C=Cambio modo S=salir"); //mostrar en pantalla los botones de ayuda
 			attroff(COLOR_PAIR(6)); //finaliza el color 6
-		}
+
+		}	
+		
 	}
 
 
