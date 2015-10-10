@@ -83,21 +83,24 @@ int main(void)
 		}
 		if(ch!='C')
 		{
-		erase ();		
-		mostrarRegistros(registros,13); //mostrar registros
-		mostrarbanderas(Banderas,4); //mostrar banderas
-		mvprintw(12,7,"      ");
-		mvprintw(12,4,"PC: %d",registros[15]); //imprimir valor de pc
-		refreshScreen();
-		mvprintw(14,4,"LR: %d",registros[14]); //Imprimir valor de lr
-		instruction = getInstruction(instructions[registros[15]]); // Instrucción en la posición 0
-		mvprintw(16,4,"->");
-		mvprintw(16,7,instructions[registros[15]]); //imprimir la próxima instrucción
-		decodeInstruction(instruction,registros,Banderas,memory); // encargada de hacer el llamado a la instrucción y modifica el pc para saber que linea del txt ejecutar	
-		init_pair(6, COLOR_WHITE, COLOR_BLACK); //definición el par de color 6
-		attron(COLOR_PAIR(6)); //inicia el color 6
-		mvprintw(23,3,"BOTONES DE AYUDA: R=Reiniciar A=Automatico P=Parar C=Cambio modo S=salir"); //mostrar en pantalla los botones de ayuda
-		attroff(COLOR_PAIR(6)); //finaliza el color 6
+			erase ();		
+			mostrarRegistros(registros,13); //mostrar registros
+			mostrarbanderas(Banderas,4); //mostrar banderas
+			mvprintw(12,7,"      ");
+			mvprintw(12,4,"PC: %d",registros[15]); //imprimir valor de pc
+			refreshScreen();
+			mvprintw(14,4,"LR: %d",registros[14]); //Imprimir valor de lr
+			
+			//nvic(registros,Banderas,memory,interrupciones);
+			
+			instruction = getInstruction(instructions[registros[15]]); // Instrucción en la posición 0
+			mvprintw(16,4,"->");
+			mvprintw(16,7,instructions[registros[15]]); //imprimir la próxima instrucción
+			decodeInstruction(instruction,registros,Banderas,memory); // encargada de hacer el llamado a la instrucción y modifica el pc para saber que linea del txt ejecutar	
+			init_pair(6, COLOR_WHITE, COLOR_BLACK); //definición el par de color 6
+			attron(COLOR_PAIR(6)); //inicia el color 6
+			mvprintw(23,2,"BOTONES DE AYUDA: R=Reiniciar A=Automatico P=Parar C=Cambio I=interrupciones S=salir"); //mostrar en pantalla los botones de ayuda
+			attroff(COLOR_PAIR(6)); //finaliza el color 6
 		}	
 	}
 	

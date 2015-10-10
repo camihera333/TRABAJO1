@@ -6,6 +6,12 @@
 void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t* Banderas, uint8_t* memory)
 {
 	uint32_t a;
+	//LDR
+	if  ((strcmp(instruction.mnemonic,"LDR") == 0))
+	{
+		
+		registros[15]++;
+	}
 	// PUSH
 	if(( strcmp(instruction.mnemonic,"push") == 0 ))
 	{		

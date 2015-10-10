@@ -3,6 +3,90 @@
 #include <stdint.h>
 #include "instrucciones.h"
 #include "funcioninterfaz.h"
+void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint32_t* interrupciones) 
+{
+	int i;
+	static uint8_t a=0;
+	if(a==1)
+	{
+		if(registros[15]==0xFFFFFFFF)
+		{
+			popp(registros,memory,Banderas);
+			a=0;
+		}
+	}
+	else
+	{
+		for(i=0;i<=32;i++)
+		{
+			if(interrupciones[i]==1)
+			{
+				ppush(registros,memory,Banderas);
+				registros[14]=0xFFFFFFFF;
+				registros[15]=i+1;
+				a=1;
+				interrupciones[i]==0;
+				break;
+			}
+		}
+	}
+}
+void ppush (uint32_t* registros,uint8_t* memory,uint32_t* Banderas)  
+{
+	uint32_t a;//declaración variables locales
+	uint8_t register_list[16]={1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1};
+	a=BitCount(register_list); //declaración variables locales
+	uint32_t address;//declaración variables locales
+	int i;//declaración variables locales
+	address=registros[13]-4*a; //Asignación de valor a address
+	for(i=0;i<=14;i++) //ciclo que va hasta el número de registros
+	{
+		if(register_list[i]==1) //condicion
+		{
+			if(i==13)
+			{
+				memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
+				memory[address+1]=(uint8_t)(registros[i]>>8);
+				memory[address+2]=(uint8_t)(registros[i]>>16);
+				memory[address+3]=(uint8_t)(registros[i]>>24);
+			}
+			else
+			{
+				memory[address]=(uint8_t)(registros[i]);  //guarda en la posición adress del arreglo memory
+				memory[address+1]=(uint8_t)(registros[i]>>8);
+				memory[address+2]=(uint8_t)(registros[i]>>16);
+				memory[address+3]=(uint8_t)(registros[i]>>24);
+			}	
+			address=address+4; //Actualiza adress
+		}
+	}
+	registros[13]=registros[13]-4*a; //Actualiza el registro en la posición 13
+}
+void popp(uint32_t* registros,uint8_t* memory,uint32_t* Banderas) //declaración de función pop
+{
+	uint32_t a;//declaración variables locales
+	uint8_t register_list[16]={1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1};
+	a=BitCount(register_list);//declaración variables locales
+	uint32_t address;//declaración variables locales
+	int i;//declaración variables locales
+	address=registros[13]; //Asignación de valor a address
+	for(i=0;i<=15;i++) //ciclo que va hasta el número de registros
+	{
+		if(register_list[i]==1) //condicion
+		{
+			if(i==13)
+			{
+				registros[i]=((uint32_t)memory[address+3]<<24)|((uint32_t)memory[address+2]<<16)|((uint32_t)memory[address+1]<<8)|((uint32_t)memory[address]);//se guarda en registros en la posición i el valor indicado
+			}
+			else
+			{
+				registros[i]=((uint32_t)memory[address+3]<<24)|((uint32_t)memory[address+2]<<16)|((uint32_t)memory[address+1]<<8)|((uint32_t)memory[address]);
+			}
+				address=address+4; //Se actualiza address
+		}
+	registros[13]=registros[13]+4*a; //Actualiza el registro en la posición 13
+	}
+}
 
 uint32_t BitCount(uint8_t* register_list)//declaración de función BitCount
 {

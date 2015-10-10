@@ -2,7 +2,11 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <curses.h>
+void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint32_t* interrupciones);
 
+void ppush (uint32_t* registros,uint8_t* memory,uint32_t* Banderas) ;
+
+void popp(uint32_t* registros,uint8_t* memory,uint32_t* Banderas);
 /**
 * \brief Function BitCount
 * \param uint8_t* register_list puntero a la primera direccion del arreglo
