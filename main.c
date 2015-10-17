@@ -7,13 +7,14 @@
 #include "instrucciones.h"
 #include <stdint.h>
 #include "decoder.h"
-
+#include "io.h"
 int main(void)
 {
 	//declaracion de variables locales
 	uint32_t Banderas[4]={0};
     uint32_t registros[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,256,0,0};
 	uint8_t memory[256];//declaración variables locales
+	extern uint8_t irq[16];
 	uint8_t mem_pro = 0;
 
 
@@ -112,6 +113,7 @@ int main(void)
 			mvprintw(14,4,"LR: %d",registros[14]); //Imprimir valor de lr
 			instruction = getInstruction(instructions[registros[15]]); // Instrucción en la posición 0
 			mvprintw(16,4,"->");
+			nvic(registros,Banderas,memory,irq);
 			mvprintw(16,7,instructions[registros[15]]); //imprimir la próxima instrucción
 			decodeInstruction(instruction,registros,Banderas,memory); // encargada de hacer el llamado a la instrucción y modifica el pc para saber que linea del txt ejecutar	
 			init_pair(6, COLOR_WHITE, COLOR_BLACK); //definición el par de color 6

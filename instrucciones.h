@@ -31,7 +31,7 @@ void memint (uint32_t address, uint32_t num, uint8_t* memory, uint32_t num2);
 * \param uint32_t interrupciones puntero a la primera direccion del arreglo
 * \return 0
 */
-void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint32_t* interrupciones);
+void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint8_t* irq);
 
 /**
 * \brief Function ppush

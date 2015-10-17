@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "instrucciones.h"
 #include "funcioninterfaz.h"
+#include "io.h"
 
 uint32_t memout (uint32_t address, uint32_t num, uint8_t* memory) //función que saca los valores de la memoria
 {
@@ -73,7 +74,7 @@ void memint (uint32_t address, uint32_t num, uint8_t* memory, uint32_t num2)
 	}
 }
 
-void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint32_t* interrupciones) 
+void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint8_t* irq) 
 {
 	int i;
 	static uint8_t a=0;
@@ -89,13 +90,13 @@ void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint32_t* inter
 	{
 		for(i=0;i<=32;i++)
 		{
-			if(interrupciones[i]==1)
+			if(irq[i]==1)
 			{
 				ppush(registros,memory,Banderas);
 				registros[14]=0xFFFFFFFF;
 				registros[15]=i+1;
 				a=1;
-				interrupciones[i]==0;
+				irq[i]==0;
 				break;
 			}
 		}
@@ -211,22 +212,29 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
 
  void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDR
 {
-	uint32_t address=0;
-	uint32_t aux=0;
-	aux=b;
-	aux=aux<<2;
-	address=a+aux;
-	*rd=memout(address,4,memory);          
+		uint32_t address=0;
+		uint32_t aux=0;
+		aux=b;
+		aux=aux<<2;
+		address=a+aux;
+		*rd=memout(address,4,memory); 
 }
 
  void LDRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRB
 {
-	uint32_t address=0;
+	uint32_t dir=a+(b<<2);
+	if((dir>=0x20000000)&&(dir<0x40000000))
+	{
+		uint32_t address=0;
 	uint32_t aux=0;
 	aux=b;
 	address=a+aux;
 	*rd=memout(address,1,memory);  
-   
+	}
+	if(dir>=0x40000000)
+	{
+		IOAccess(dir,(uint8_t*)rd, Read);
+	}
 }
 
  void LDRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRH
@@ -279,11 +287,19 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
  
  void STRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función STRB
  {
+	uint32_t dir=a+(b<<2);
+	if((dir>=0x20000000)&&(dir<0x40000000))
+	{
 	uint32_t address=0;
 	uint32_t aux=0;
 	aux=b;
 	address=a+aux;
 	memint(address,1,memory,*rd);
+	}
+	if(dir>=0x40000000)
+	{
+		IOAccess(dir, (uint8_t*)rd, Write);
+	}
  }
  
  void STRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función STRH
