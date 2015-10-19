@@ -1,6 +1,7 @@
 push {R0,R2,R1,R4}
 pop {R5,R7,R6,R3}
 MOVS R0,#4
+ADD R2,R3,#6
 STR R1,[R2,R0]
 MOVS R1,#20
 MOVS R2,#10

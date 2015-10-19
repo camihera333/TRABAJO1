@@ -5,7 +5,8 @@
 
 void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t* Banderas, uint8_t* memory)
 {
-	uint32_t a;
+	uint32_t a,d,e,f,g;
+	uint32_t aux=0;
 	
 	//Función LDR
 	if( strcmp(instruction.mnemonic,"LDR") == 0 ){ //comparando caracteres con los del archivo txt
@@ -15,18 +16,30 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			}
 				if(instruction.op2_type=='R'){//si el operando 2 es un registro
 				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
-				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				MOV(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 				}
 		}
 		
 		else {
 			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
-			LDR(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			aux=instruction.op3_value; //Se guarda el valor actual del operador en a
+			aux=aux<<2;
+			LDR(&registros[instruction.op1_value],registros[instruction.op2_value],aux,memory); //se invoca la función
+			aux=0;
 			}
 				else{
 				LDR(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
 				}
 		}
+		uint32_t h=26624;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
+		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
 	
@@ -38,18 +51,29 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			}
 				if(instruction.op2_type=='R'){//si el operando 2 es un registro
 				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
-				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				MOV(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 				}
 		}
 		
 		else {
 			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
-			LDRB(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			aux=instruction.op3_value; //Se guarda el valor actual del operador en a
+			LDRB(&registros[instruction.op1_value],registros[instruction.op2_value],aux,memory); //se invoca la función
+			aux=0;
 			}
 				else{
 				LDRB(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
 				}
 		}
+		uint32_t h=30720;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
+		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
 	
@@ -61,18 +85,30 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			}
 				if(instruction.op2_type=='R'){//si el operando 2 es un registro
 				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
-				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				MOV(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 				}
 		}
 		
 		else {
 			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
-			LDRH(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			aux=instruction.op3_value; //Se guarda el valor actual del operador en a
+			aux=aux<<1;
+			LDRH(&registros[instruction.op1_value],registros[instruction.op2_value],aux,memory); //se invoca la función
+			aux=0;
 			}
 				else{
 				LDRH(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
 				}
 		}
+		uint32_t h=34816;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
+		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
 	
@@ -80,6 +116,15 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 	if( strcmp(instruction.mnemonic,"LDRSB") == 0 ){ //comparando caracteres con los del archivo txt
 	
 		LDR(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+		uint32_t h=22016;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
+		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
 	
@@ -87,6 +132,15 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 	if( strcmp(instruction.mnemonic,"LDRSH") == 0 ){ //comparando caracteres con los del archivo txt
 	
 		LDR(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
+		uint32_t h=24064;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
+		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
 	
@@ -98,18 +152,30 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			}
 				if(instruction.op2_type=='R'){//si el operando 2 es un registro
 				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
-				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				MOV(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 				}
 		}
 		
 		else {
 			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
-			STR(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			aux=instruction.op3_value;
+			aux=aux<<2;
+			STR(&registros[instruction.op1_value],registros[instruction.op2_value],aux,memory); //se invoca la función
+			aux=0;
 			}
 				else{
 				STR(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
 				}
 		}
+		uint32_t h=24576;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
+		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
 	
@@ -121,18 +187,29 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			}
 				if(instruction.op2_type=='R'){//si el operando 2 es un registro
 				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
-				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				MOV(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 				}
 		}
 		
 		else {
 			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
-			STRB(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			aux=instruction.op3_value;
+			STRB(&registros[instruction.op1_value],registros[instruction.op2_value],aux,memory); //se invoca la función
+			aux=0;
 			}
 				else{
 				STRB(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
 				}
 		}
+		uint32_t h=28672;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
+		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
 	
@@ -144,18 +221,30 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			}
 				if(instruction.op2_type=='R'){//si el operando 2 es un registro
 				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
-				MOV(&registros[instruction.op1_value],&registros[instruction.op2_value]); //se invoca la función
+				MOV(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 				}
 		}
 		
 		else {
 			if(instruction.op3_type=='#'){  //si el operando 3 es un numero
+			aux=instruction.op3_value;
+			aux=aux<<1;
 			STRH(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,memory); //se invoca la función
+			aux=0;
 			}
 				else{
 				STRH(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],memory);//se invoca la función
 				}
 		}
+		uint32_t h=32768;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
+		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
 	
@@ -178,13 +267,13 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		if(instruction.op3_type=='N'){ //si el operando 3 no es ni un registro, ni un número
 			if(instruction.op2_type=='#'){ //si el operando 2 es un número
 				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
-			ADD(&registros[instruction.op1_value],registros[instruction.op1_value],instruction.op2_value); //se invoca la función
-			funcBanderas (&registros[instruction.op1_value],a,instruction.op2_value,Banderas); //se invoca la función de las banderas
-				if(instruction.op2_type=='R'){//si el operando 2 es un registro
-				a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
-				ADD(&registros[instruction.op1_value],registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
-				funcBanderas (&registros[instruction.op1_value],a,registros[instruction.op2_value],Banderas); //se invoca la función de las banderas
-				}
+				ADD(&registros[instruction.op1_value],registros[instruction.op1_value],instruction.op2_value); //se invoca la función
+				funcBanderas (&registros[instruction.op1_value],a,instruction.op2_value,Banderas); //se invoca la función de las banderas		
+					if(instruction.op2_type=='R'){//si el operando 2 es un registro
+					a=registros[instruction.op1_value]; //Se guarda el valor actual del operador en a
+					ADD(&registros[instruction.op1_value],registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
+					funcBanderas (&registros[instruction.op1_value],a,registros[instruction.op2_value],Banderas); //se invoca la función de las banderas
+					}
 			}
 		}
 
@@ -193,11 +282,20 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			ADD(&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value); //se invoca la función
 			funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],instruction.op3_value,Banderas);//se invoca la función de las banderas
 			}
-				else{
+				else{	
 				ADD(&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value]);//se invoca la función
-				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
+				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas	
+				
 				}
 		}
+		uint32_t h=6144;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -227,6 +325,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=16384;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -256,6 +362,13 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=16448;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		g=h|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++; //incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -285,6 +398,13 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=17152;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		g=h|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -314,6 +434,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=6656;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -343,6 +471,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=16898;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -372,6 +508,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=16896;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -402,6 +546,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas2 (&registros[instruction.op1_value],a,Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=0;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;		
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -429,6 +581,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas2 (&registros[instruction.op1_value],registros[instruction.op2_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=2048;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -458,6 +618,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=16384;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -487,6 +655,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas (&registros[instruction.op1_value],registros[instruction.op2_value],registros[instruction.op3_value],Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=16384;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -501,6 +677,13 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		MOV(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 		funcBanderas2(&registros[instruction.op1_value],registros[instruction.op2_value],Banderas);//se invoca la función de las banderas
 		}
+		uint32_t h=4096;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		g=h|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 	}
 
@@ -514,6 +697,13 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		MVN(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 		funcBanderas2(&registros[instruction.op1_value],registros[instruction.op2_value],Banderas);//se invoca la función de las banderas
 		}
+		uint32_t h=8192;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		g=h|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++; //incrementa registros[15], es decir pc, en uno
 	}
 
@@ -527,6 +717,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		RSB(&registros[instruction.op1_value],registros[instruction.op2_value]); //se invoca la función
 		funcBanderas2(&registros[instruction.op1_value],registros[instruction.op2_value],Banderas);//se invoca la función de las banderas
 		}
+		uint32_t h=16896;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 	}
 
@@ -557,6 +755,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas2 (&registros[instruction.op1_value],a,Banderas);//se invoca la función de las banderas
 				}
 		}
+		uint32_t h=16896;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -574,6 +780,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		else {
 		CMN(registros[instruction.op1_value],registros[instruction.op2_value],Banderas); //se invoca la función
 		}
+		uint32_t h=16896;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -585,6 +799,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		else {
 		CMP(registros[instruction.op1_value],registros[instruction.op2_value],Banderas); //se invoca la función
 		}
+		uint32_t h=10240;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -596,6 +818,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		else {
 		TST(registros[instruction.op1_value],registros[instruction.op2_value],Banderas); //se invoca la función
 		}
+		uint32_t h=16896;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -627,6 +857,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 				funcBanderas2 (&registros[instruction.op1_value],a,Banderas);
 				}
 		}
+		uint32_t h=4096;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 		return;
 	}
@@ -638,6 +876,14 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		else {
 		REV(&registros[instruction.op1_value],registros[instruction.op2_value]);//se invoca la función
 		}
+		uint32_t h=47616;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		f=instruction.op3_value; //se obtiene el valor del tercer operando y se guarda en la variable 
+		g=h|(f<<6)|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 	}
 
@@ -648,6 +894,13 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		else {
 		REV16(&registros[instruction.op1_value],registros[instruction.op2_value]);//se invoca la función
 		}
+		uint32_t h=47680;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		g=h|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 	}
 
@@ -658,11 +911,24 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 		else {
 		REVSH(&registros[instruction.op1_value],registros[instruction.op2_value]);//se invoca la función
 		}
+		uint32_t h=47808;
+		d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+		e=instruction.op2_value; //se obtiene el valor del segundo operando y se guarda en la variable e
+		g=h|(e<<3)|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+		mvprintw(20,3,"Codificacion de la instruccion: "); 
+		mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+		g=0;
 		registros[15]++;//incrementa registros[15], es decir pc, en uno
 	}
 	//B
 	if( strcmp(instruction.mnemonic,"B") == 0 ){ //comparando caracteres con los del archivo txt
 			registros[15]+=instruction.op1_value; //guarda en pc el valor del operando 1
+			uint32_t h=53248;
+			d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+			g=h|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+			mvprintw(20,3,"Codificacion de la instruccion: "); 
+			mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+			g=0;
 	}
 	
 	//BL
@@ -671,6 +937,12 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15]; //guarda en a el valor de pc
 			registros[15]+=instruction.op1_value; //guarda en pc el valor del operando 1+a
 			registros[14]=a+1; //guarda en LR el valor de a +1
+			uint32_t h=53248;
+			d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+			g=h|d;  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+			mvprintw(20,3,"Codificacion de la instruccion: "); 
+			mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+			g=0;
 	}
 	
 
@@ -680,6 +952,13 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			a=registros[15];//guarda en a el valor de pc
 			registros[15]=a-1; //guarda en pc el valor del operando a-1
 			registros[14]=instruction.op1_value; //guarda en lr el valor del operando 1
+			registros[15]+=instruction.op1_value; //guarda en pc el valor del operando 1
+			uint32_t h=18304;
+			d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+			g=h|(d<<3);  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+			mvprintw(20,3,"Codificacion de la instruccion: "); 
+			mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+			g=0;
 	}
 	
 
@@ -687,6 +966,12 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 	if( strcmp(instruction.mnemonic,"BX") == 0 ){ //comparando caracteres con los del archivo txt
 
 			registros[15]=registros[14]; //guarda en pc el valor de lr
+			uint32_t h=18176;
+			d=instruction.op1_value; //se obtiene el valor del primer operando y se guarda en la variable d
+			g=h|(d<<3);  //Se realiza un or entre los bits fijos de la función y los respectivos valores de los operandos
+			mvprintw(20,3,"Codificacion de la instruccion: "); 
+			mvprintw(20,37,"%X",g); //Se imprime el valor en hexagesimal
+			g=0;
 	}
 			
 
@@ -698,6 +983,8 @@ void decodeInstruction(instruction_t instruction, uint32_t* registros, uint32_t*
 			}
 				else 
 				registros[15]++;
+			
+			
 	}
 	
 

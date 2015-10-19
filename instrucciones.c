@@ -9,17 +9,17 @@ uint32_t memout (uint32_t address, uint32_t num, uint8_t* memory) //función que
 {
 	//declaración de variables locales
 	uint32_t aux2=0;
-	uint8_t aux[num];
+	uint8_t aux[4];
 	int i;
 	for (i=0;i<num;i++) //ciclo que determina como se van a guardar los valores 
 	{
-		aux[i]=memory[address-i]; //los valores se van a tomar en forma ascendente
+		aux[i]=memory[address+i]; //los valores se van a tomar en forma ascendente
 	}
 	
 	for (i=0;i<num;i++) // ciclo con el cual se guardan los valores en la memoria
 	{	
-		aux2=aux2<<8; //corrimiento del valor aux2
-		aux2=aux2|aux[i]; //rellenado de los valores en la memoria
+		//aux2=aux2<<8; //corrimiento del valor aux2
+		aux2|=(aux[i]<<(8*i)); //rellenado de los valores en la memoria
 	}
 	return aux2; //retorna el valor rellenado en la memoria
 }
@@ -27,7 +27,8 @@ uint32_t memout (uint32_t address, uint32_t num, uint8_t* memory) //función que
 void memint (uint32_t address, uint32_t num, uint8_t* memory, uint32_t num2)
 {
 	int i; //variable local
-	uint32_t mas1=0,mas2=0,mas3=0,mas4=0,h1,h2,h3,h4; //variables locales
+	uint8_t h1,h2,h3,h4;
+	uint32_t mas1=0,mas2=0,mas3=0,mas4=0; //variables locales
 	for (i=0; i<32;i++) // ciclo para recorrer cada bit
 	{
 		if ((i>=0)&&(i<8)) //condición para sólo operar con los bits del 0 al 7
@@ -43,9 +44,9 @@ void memint (uint32_t address, uint32_t num, uint8_t* memory, uint32_t num2)
 		mas4=(1<<i)|mas4; //en mas4 guarda los  bits del 24 al 31
 	}
 	h1=mas1&num2;//en h1 guarda los  bits del 0 al 7
-	h2=mas2&num2;//en h2 guarda los  bits del 8 al 15
-	h3=mas3&num2;//en h3 guarda los  bits del 16 al 23
-	h4=mas4&num2;//en h4 guarda los  bits del 24 al 31
+	h2=(mas2&num2)>>8;//en h2 guarda los  bits del 8 al 15
+	h3=(mas3&num2)>>16;//en h3 guarda los  bits del 16 al 23
+	h4=(mas4&num2)>>24;//en h4 guarda los  bits del 24 al 31
 	
 	if(num==1)
 	{
@@ -55,25 +56,24 @@ void memint (uint32_t address, uint32_t num, uint8_t* memory, uint32_t num2)
 	if(num==2)
 	{
 		memory[address]=h2;
-		memory[address-1]=h1;
+		memory[address+1]=h1;
 	}
 	
 	if(num==3)
 	{
 		memory[address]=h3;
-		memory[address-1]=h2;
-		memory[address-2]=h1;		
+		memory[address+1]=h2;
+		memory[address+2]=h1;		
 	}
 	
 	if(num==4)
 	{
 		memory[address]=h4;
-		memory[address-1]=h3;
-		memory[address-2]=h2;
-		memory[address-3]=h1;		
+		memory[address+1]=h3;
+		memory[address+2]=h2;
+		memory[address+3]=h1;		
 	}
 }
-
 void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint8_t* irq) 
 {
 	int i;
@@ -212,12 +212,9 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
 
  void LDR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDR
 {
-		uint32_t address=0;
-		uint32_t aux=0;
-		aux=b;
-		aux=aux<<2;
-		address=a+aux;
-		*rd=memout(address,4,memory); 
+	uint32_t address=0;
+	address=a+b;
+	*rd=memout(address,4,memory);          
 }
 
  void LDRB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRB
@@ -225,11 +222,9 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
 	uint32_t dir=a+(b<<2);
 	if((dir>=0x20000000)&&(dir<0x40000000))
 	{
-		uint32_t address=0;
-	uint32_t aux=0;
-	aux=b;
-	address=a+aux;
-	*rd=memout(address,1,memory);  
+	uint32_t address=0;
+	address=a+b;
+	*rd=memout(address,1,memory); 
 	}
 	if(dir>=0x40000000)
 	{
@@ -240,23 +235,20 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
  void LDRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRH
 {
     uint32_t address=0;
-	uint32_t aux=0;
-	aux=b;
-	aux=aux<<1;
-	address=a+aux;
-	*rd=memout(address,2,memory);
+	address=a+b;
+	*rd=memout(address,2,memory);   
 }
 
  void LDRSB (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función LDRSB
 {
 	uint8_t z=0;
-    uint32_t address=0;
+	uint32_t address=0, g=4294967040;
 	uint32_t aux=0;
 	aux=b;
 	address=a+aux;
 	z=memout(address,1,memory);
 	if(z>=128) //condicion para saber si el valor de a es negativo
-		*rd=(memout(address,1,memory))|(4294967040); //guarde en rd el valor desplazado 8 veces a la derecha y haga un or con mas2
+		*rd=(memout(address,1,memory))|(g); //guarde en rd el valor desplazado 8 veces a la derecha y haga un or con mas2
 	else
 	*rd=memout(address,1,memory);   
 }
@@ -278,10 +270,7 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
  void STR (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función STR
  {
 	uint32_t address=0;
-	uint32_t aux=0;
-	aux=b;
-	aux=aux<<2;
-	address=a+aux;
+	address=a+b;
 	memint(address,4,memory,*rd);
 }
  
@@ -291,9 +280,7 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
 	if((dir>=0x20000000)&&(dir<0x40000000))
 	{
 	uint32_t address=0;
-	uint32_t aux=0;
-	aux=b;
-	address=a+aux;
+	address=a+b;
 	memint(address,1,memory,*rd);
 	}
 	if(dir>=0x40000000)
@@ -305,10 +292,7 @@ void pop(uint32_t* registros,uint8_t* register_list,uint8_t* memory) //declaraci
  void STRH (uint32_t* rd, uint32_t a, uint32_t b,uint8_t* memory)  //declaración de función STRH
  {
 	uint32_t address=0;
-	uint32_t aux=0;
-	aux=b;
-	aux=aux<<1;
-	address=a+aux;
+	address=a+b;
 	memint(address,2,memory,*rd);
  }
 
