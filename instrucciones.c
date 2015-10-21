@@ -96,7 +96,7 @@ void nvic(uint32_t* registros,uint32_t* Banderas,uint8_t* memory,uint8_t* irq)
 				registros[14]=0xFFFFFFFF;
 				registros[15]=i+1;
 				a=1;
-				irq[i]==0;
+				irq[i]=0;
 				break;
 			}
 		}
