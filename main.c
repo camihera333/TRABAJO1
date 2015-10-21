@@ -50,6 +50,7 @@ int main(void)
 	
 	while(ch!='S') //ciclo infinito hasta que se presione la tecla S, salir
 	{
+		nvic(registros,Banderas,memory,irq);
 		ch = getch(); //obtiene la tecla que se presionó
 		if(ch=='R') //condición si se presionó la tecla R, reinicia
 		{
@@ -117,13 +118,17 @@ int main(void)
 				
 				if(ch=='K') //ciclo infinito hasta que se presione la tecla P, pausar
 				{
+					
 					ch=getch();
 					
-					IOAccess(2, &data, Read);
-					if(data&(1<<(ch-48)))
+					IOAccess(3, &data, Read);
+					if(data&(1<<(ch-48))==1)
 						changePinPortB(ch-48,LOW);
+						
 					else
 						changePinPortB(ch-48,HIGH);
+					
+					irq[(1<<(ch-48))]=1;
 				}
 		
 				if(ch=='L') //ciclo infinito hasta que se presione la tecla P, pausar
@@ -135,6 +140,8 @@ int main(void)
 						changePinPortA(ch-48,LOW);
 					else
 						changePinPortA(ch-48,HIGH);
+					
+					//irq[(1<<(ch-48))]=1;
 				}
 				showPorts();
 				mem_pro=1;
@@ -166,10 +173,9 @@ int main(void)
 			mvprintw(12,7,"      ");
 			mvprintw(12,4,"PC: %d",registros[15]); //imprimir valor de pc
 			refreshScreen();
-			mvprintw(14,4,"LR: %d",registros[14]); //Imprimir valor de lr
+			mvprintw(14,4,"LR: %X",registros[14]); //Imprimir valor de lr
 			instruction = getInstruction(instructions[registros[15]]); // Instrucción en la posición 0
 			mvprintw(16,4,"->");
-			nvic(registros,Banderas,memory,irq);
 			mvprintw(16,7,instructions[registros[15]]); //imprimir la próxima instrucción
 			decodeInstruction(instruction,registros,Banderas,memory); // encargada de hacer el llamado a la instrucción y modifica el pc para saber que linea del txt ejecutar	
 			init_pair(6, COLOR_WHITE, COLOR_BLACK); //definición el par de color 6
